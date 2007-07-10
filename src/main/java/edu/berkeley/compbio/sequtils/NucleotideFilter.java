@@ -45,4 +45,6 @@ public abstract interface NucleotideFilter
 	//private static Logger logger = Logger.getLogger(NucleotideFilter.class);
 
 	public byte filter(byte b) throws FilterException;
+
+	public void filter(byte[] buffer, int length) throws FilterException;
 	}

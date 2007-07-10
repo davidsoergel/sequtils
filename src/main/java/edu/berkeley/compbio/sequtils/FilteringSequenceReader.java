@@ -65,6 +65,15 @@ public class FilteringSequenceReader implements SequenceReader
 		return filter.filter(base.read());
 		}
 
+
+	public int read(byte[] buffer, int length) throws IOException, FilterException, NotEnoughSequenceException
+		{
+		int valid = base.read(buffer, length);
+		filter.filter(buffer, valid);
+		return valid;
+		}
+
+
 	/**
 	 * Returns the total amount of sequence present in this reader
 	 *
@@ -76,7 +85,7 @@ public class FilteringSequenceReader implements SequenceReader
 		}
 
 	/**
-	 * Returns the species name of this reader4
+	 * Returns the species name of this reader
 	 *
 	 * @return A String representing the name of the sequence
 	 */
@@ -91,5 +100,14 @@ public class FilteringSequenceReader implements SequenceReader
 	public void close()
 		{
 		base.close();
+		}
+
+	/**
+	 * resets the base reader.  Note that the filter will be applied anew on the next read, so the provided sequence may
+	 * differ after a reset.
+	 */
+	public void reset()
+		{
+		base.reset();
 		}
 	}

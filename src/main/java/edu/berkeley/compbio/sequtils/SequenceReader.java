@@ -105,4 +105,19 @@ public interface SequenceReader
 	 */
 	public byte read()
 			throws IOException, FilterException, NotEnoughSequenceException;// Read one character from the buffer
+
+	/**
+	 * Reads nucleotides into a byte array
+	 *
+	 * @param buffer a byte[] to read into.
+	 * @param length how many nucleotides to read (must be less than or equal to the size of the given buffer)
+	 * @return The number of nucleotides read
+	 */
+	public int read(byte[] buffer, int length)
+			throws IOException, FilterException, NotEnoughSequenceException;// Read one character from the buffer
+
+	/**
+	 * reset the stream to the beginning.
+	 */
+	public void reset();
 	}

@@ -32,6 +32,8 @@
 
 package edu.berkeley.compbio.sequtils;
 
+import java.io.IOException;
+
 
 /**
  * @author lorax
@@ -75,6 +77,21 @@ public class ByteArraySequenceReader implements SequenceReader
 			}
 		}
 
+	/**
+	 * Reads nucleotides into a byte array
+	 *
+	 * @param buffer a byte[] to read into.
+	 * @param length how many nucleotides to read (must be less than or equal to the size of the given buffer)
+	 * @return The number of nucleotides read
+	 */
+	public int read(byte[] buffer, int length)
+			throws IOException, FilterException, NotEnoughSequenceException// Read one character from the buffer
+		{
+		length = Math.min(length, theBytes.length);
+		System.arraycopy(theBytes, pos, buffer, 0, length);
+		return length;
+		}
+
 	/*
 	 public void seek(int position) throws IOException // Seek to a particular position
 		 {
@@ -108,8 +125,14 @@ public class ByteArraySequenceReader implements SequenceReader
 
 	// -------------------------- OTHER METHODS --------------------------
 
-	public int toSectionStart()
+	/*public int toSectionStart()
 		{
 		return pos = 0;
+		}*/
+
+
+	public void reset()
+		{
+		pos = 0;
 		}
 	}
