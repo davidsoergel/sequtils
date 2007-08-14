@@ -141,6 +141,21 @@ public class SequenceFragmentMetadata
 		}
 
 	/**
+	 * Returns a String identifying the largest sequence to which this fragment belongs (i.e., the root af the parent
+	 * hierarchy)
+	 *
+	 * @return a String identifying the largest sequence to which this fragment belongs
+	 */
+	public String getRootSequenceName()
+		{
+		if (parentMetadata != null)
+			{
+			return parentMetadata.getRootSequenceName();
+			}
+		return getSequenceName();
+		}
+
+	/**
 	 * Sets a String identifying this sequnce
 	 *
 	 * @param sequenceName a String identifying this sequnce
