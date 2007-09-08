@@ -21,6 +21,19 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
+      <library name="M2 Dep: commons-collections:commons-collections:jar:2.1:compile">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../.m2/repository/commons-collections/commons-collections/2.1/commons-collections-2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$MODULE_DIR$/../../.m2/repository/commons-collections/commons-collections/2.1/commons-collections-2.1-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../.m2/repository/commons-collections/commons-collections/2.1/commons-collections-2.1-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
       <library name="M2 Dep: commons-lang:commons-lang:jar:2.1:compile">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/../../.m2/repository/commons-lang/commons-lang/2.1/commons-lang-2.1.jar!/" />
