@@ -53,6 +53,7 @@ public class SequenceFragmentMetadata
 
 	protected String sequenceName = null;
 	protected int startPosition = 0;
+	private Integer taxid;
 
 
 	// --------------------------- CONSTRUCTORS ---------------------------
@@ -65,9 +66,10 @@ public class SequenceFragmentMetadata
 	 * @param sequenceName  a String identifier for this sequence
 	 * @param startPosition the index in the parent sequence of the first symbol in this sequence
 	 */
-	public SequenceFragmentMetadata(SequenceFragmentMetadata parent, String sequenceName, int startPosition)
+	public SequenceFragmentMetadata(SequenceFragmentMetadata parent, String sequenceName, Integer taxid,
+	                                int startPosition)
 		{
-		this(parent, sequenceName, startPosition, UNKNOWN_LENGTH);
+		this(parent, sequenceName, taxid, startPosition, UNKNOWN_LENGTH);
 		}
 
 	/**
@@ -79,10 +81,12 @@ public class SequenceFragmentMetadata
 	 * @param startPosition the index in the parent sequence of the first symbol in this sequence
 	 * @param length        the length of this sequence
 	 */
-	public SequenceFragmentMetadata(SequenceFragmentMetadata parent, String sequenceName, int startPosition, int length)
+	public SequenceFragmentMetadata(SequenceFragmentMetadata parent, String sequenceName, Integer taxid,
+	                                int startPosition, int length)
 		{
 		this.parentMetadata = parent;
 		this.sequenceName = sequenceName;
+		this.taxid = taxid;
 		this.startPosition = startPosition;
 		this.length = length;
 		}
@@ -215,4 +219,9 @@ public class SequenceFragmentMetadata
 	   {
 	   return new SequenceFragmentMetadata(parentMetadata, sequenceName, startPosition, length);
 	   }*/
+
+	public Integer getTaxid()
+		{
+		return taxid;
+		}
 	}
