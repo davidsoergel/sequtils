@@ -110,4 +110,15 @@ public class FilteringSequenceReader implements SequenceReader
 		{
 		base.reset();
 		}
+
+
+	public void seek(SequenceFragmentMetadata section) throws IOException
+		{
+		base.seek(section);
+		}
+
+	public void seek(SequenceFragmentMetadata section, int offset) throws IOException
+		{
+		base.seek(section, offset);
+		}
 	}

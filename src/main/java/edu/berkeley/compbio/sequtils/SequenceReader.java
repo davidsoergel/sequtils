@@ -120,4 +120,9 @@ public interface SequenceReader
 	 * reset the stream to the beginning.
 	 */
 	public void reset();
+
+
+	public void seek(SequenceFragmentMetadata section) throws IOException;
+
+	public void seek(SequenceFragmentMetadata section, int offset) throws IOException;
 	}
