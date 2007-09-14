@@ -32,8 +32,6 @@
 
 package edu.berkeley.compbio.sequtils;
 
-import org.apache.commons.lang.NotImplementedException;
-
 import java.io.IOException;
 
 
@@ -140,11 +138,11 @@ public class ByteArraySequenceReader implements SequenceReader
 
 	public void seek(SequenceFragmentMetadata section) throws IOException
 		{
-		throw new NotImplementedException();
+		pos = 0;
 		}
 
 	public void seek(SequenceFragmentMetadata section, int offset) throws IOException
 		{
-		throw new NotImplementedException();
+		pos = offset;
 		}
 	}
