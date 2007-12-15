@@ -32,6 +32,8 @@
 
 package edu.berkeley.compbio.sequtils;
 
+import org.apache.commons.lang.NotImplementedException;
+
 import java.io.IOException;
 
 /**
@@ -120,5 +122,15 @@ public class FilteringSequenceReader implements SequenceReader
 	public void seek(SequenceFragmentMetadata section, int offset) throws IOException
 		{
 		base.seek(section, offset);
+		}
+
+	public void setTranslationAlphabet(byte[] alphabet)
+		{
+		throw new NotImplementedException();
+		}
+
+	public int readTranslated() throws IOException, FilterException, NotEnoughSequenceException, TranslationException
+		{
+		throw new NotImplementedException();
 		}
 	}

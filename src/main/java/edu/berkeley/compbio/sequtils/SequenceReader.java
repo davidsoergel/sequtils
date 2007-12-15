@@ -125,4 +125,9 @@ public interface SequenceReader
 	public void seek(SequenceFragmentMetadata section) throws IOException;
 
 	public void seek(SequenceFragmentMetadata section, int offset) throws IOException;
+
+	void setTranslationAlphabet(byte[] alphabet);
+
+	int readTranslated() throws IOException, FilterException, NotEnoughSequenceException, TranslationException;
+
 	}
