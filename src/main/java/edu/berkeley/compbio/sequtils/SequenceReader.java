@@ -54,7 +54,7 @@ public interface SequenceReader
 	/**
 	 * Closes the reader, and all sub-readers
 	 */
-	public void close();
+	void close();
 
 	/**
 	 * Checks to make sure the seek position is in sequence, not a header
@@ -76,7 +76,7 @@ public interface SequenceReader
 	 *
 	 * @return A String representing the name of the sequence
 	 */
-	public String getName();
+	String getName();
 
 	/**
 	 * Seek to a particular position
@@ -95,15 +95,14 @@ public interface SequenceReader
 	 *
 	 * @return The total amount of sequence
 	 */
-	public int getTotalSequence();
+	int getTotalSequence();
 
 	/**
 	 * Returns the next nucleotide
 	 *
 	 * @return The next nucleotide, or EOF if the section or file has ended
 	 */
-	public byte read()
-			throws IOException, FilterException, NotEnoughSequenceException;// Read one character from the buffer
+	byte read() throws IOException, FilterException, NotEnoughSequenceException;// Read one character from the buffer
 
 	/**
 	 * Reads nucleotides into a byte array
@@ -112,7 +111,7 @@ public interface SequenceReader
 	 * @param length how many nucleotides to read (must be less than or equal to the size of the given buffer)
 	 * @return The number of nucleotides read
 	 */
-	public int read(byte[] buffer, int length)
+	int read(byte[] buffer, int length)
 			throws IOException, FilterException, NotEnoughSequenceException;// Read one character from the buffer
 
 	int readTranslated() throws IOException, FilterException, NotEnoughSequenceException, TranslationException;
@@ -120,12 +119,12 @@ public interface SequenceReader
 	/**
 	 * reset the stream to the beginning.
 	 */
-	public void reset();
+	void reset();
 
 
-	public void seek(SequenceFragmentMetadata section) throws IOException;
+	void seek(SequenceFragmentMetadata section) throws IOException;
 
-	public void seek(SequenceFragmentMetadata section, int offset) throws IOException;
+	void seek(SequenceFragmentMetadata section, int offset) throws IOException;
 
 	void setTranslationAlphabet(byte[] alphabet);
 	}
