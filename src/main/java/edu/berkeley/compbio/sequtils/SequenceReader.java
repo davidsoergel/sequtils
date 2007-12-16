@@ -51,7 +51,6 @@ public interface SequenceReader
 	 * @return The new position
 	 */
 	//	public int toSectionStart(SectionFragmentMetadata section) throws IOException;
-
 	/**
 	 * Closes the reader, and all sub-readers
 	 */
@@ -116,6 +115,8 @@ public interface SequenceReader
 	public int read(byte[] buffer, int length)
 			throws IOException, FilterException, NotEnoughSequenceException;// Read one character from the buffer
 
+	int readTranslated() throws IOException, FilterException, NotEnoughSequenceException, TranslationException;
+
 	/**
 	 * reset the stream to the beginning.
 	 */
@@ -127,7 +128,4 @@ public interface SequenceReader
 	public void seek(SequenceFragmentMetadata section, int offset) throws IOException;
 
 	void setTranslationAlphabet(byte[] alphabet);
-
-	int readTranslated() throws IOException, FilterException, NotEnoughSequenceException, TranslationException;
-
 	}

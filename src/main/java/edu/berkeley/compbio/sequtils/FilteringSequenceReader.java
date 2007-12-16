@@ -62,28 +62,12 @@ public class FilteringSequenceReader implements SequenceReader
 	// --------------------- Interface SequenceReader ---------------------
 
 
-	public byte read() throws IOException, FilterException, NotEnoughSequenceException
-		{
-		return filter.filter(base.read());
-		}
-
-
-	public int read(byte[] buffer, int length) throws IOException, FilterException, NotEnoughSequenceException
-		{
-		int valid = base.read(buffer, length);
-		filter.filter(buffer, valid);
-		return valid;
-		}
-
-
 	/**
-	 * Returns the total amount of sequence present in this reader
-	 *
-	 * @return The total amount of sequence
+	 * Closes the reader, and all sub-readers
 	 */
-	public int getTotalSequence()
+	public void close()
 		{
-		return base.getTotalSequence();
+		base.close();
 		}
 
 	/**
@@ -97,11 +81,25 @@ public class FilteringSequenceReader implements SequenceReader
 		}
 
 	/**
-	 * Closes the reader, and all sub-readers
+	 * Returns the total amount of sequence present in this reader
+	 *
+	 * @return The total amount of sequence
 	 */
-	public void close()
+	public int getTotalSequence()
 		{
-		base.close();
+		return base.getTotalSequence();
+		}
+
+	public byte read() throws IOException, FilterException, NotEnoughSequenceException
+		{
+		return filter.filter(base.read());
+		}
+
+	public int read(byte[] buffer, int length) throws IOException, FilterException, NotEnoughSequenceException
+		{
+		int valid = base.read(buffer, length);
+		filter.filter(buffer, valid);
+		return valid;
 		}
 
 	/**
@@ -112,7 +110,6 @@ public class FilteringSequenceReader implements SequenceReader
 		{
 		base.reset();
 		}
-
 
 	public void seek(SequenceFragmentMetadata section) throws IOException
 		{

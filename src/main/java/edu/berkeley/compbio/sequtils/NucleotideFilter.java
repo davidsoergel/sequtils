@@ -46,7 +46,7 @@ public abstract interface NucleotideFilter
 
 	public byte filter(byte b) throws FilterException;
 
-	public void filter(byte[] buffer, int length) throws FilterException;
-
 	public void filter(byte[] buffer) throws FilterException;
+
+	public void filter(byte[] buffer, int length) throws FilterException;
 	}

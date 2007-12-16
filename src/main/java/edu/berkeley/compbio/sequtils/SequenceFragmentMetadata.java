@@ -145,21 +145,6 @@ public class SequenceFragmentMetadata
 		}
 
 	/**
-	 * Returns a String identifying the largest sequence to which this fragment belongs (i.e., the root af the parent
-	 * hierarchy)
-	 *
-	 * @return a String identifying the largest sequence to which this fragment belongs
-	 */
-	public String getRootSequenceName()
-		{
-		if (parentMetadata != null)
-			{
-			return parentMetadata.getRootSequenceName();
-			}
-		return getSequenceName();
-		}
-
-	/**
 	 * Sets a String identifying this sequnce
 	 *
 	 * @param sequenceName a String identifying this sequnce
@@ -189,6 +174,17 @@ public class SequenceFragmentMetadata
 		this.startPosition = startPosition;
 		}
 
+	/*
+   public SequenceFragmentMetadata clone()
+	   {
+	   return new SequenceFragmentMetadata(parentMetadata, sequenceName, startPosition, length);
+	   }*/
+
+	public Integer getTaxid()
+		{
+		return taxid;
+		}
+
 	// ------------------------ CANONICAL METHODS ------------------------
 
 	// use direct field access instead
@@ -214,14 +210,20 @@ public class SequenceFragmentMetadata
 		return sequenceName + "(" + startPosition + ":" + length + ")";
 		}
 
-	/*
-   public SequenceFragmentMetadata clone()
-	   {
-	   return new SequenceFragmentMetadata(parentMetadata, sequenceName, startPosition, length);
-	   }*/
+	// -------------------------- OTHER METHODS --------------------------
 
-	public Integer getTaxid()
+	/**
+	 * Returns a String identifying the largest sequence to which this fragment belongs (i.e., the root af the parent
+	 * hierarchy)
+	 *
+	 * @return a String identifying the largest sequence to which this fragment belongs
+	 */
+	public String getRootSequenceName()
 		{
-		return taxid;
+		if (parentMetadata != null)
+			{
+			return parentMetadata.getRootSequenceName();
+			}
+		return getSequenceName();
 		}
 	}

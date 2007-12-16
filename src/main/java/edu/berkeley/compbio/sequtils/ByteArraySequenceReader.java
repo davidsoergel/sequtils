@@ -67,6 +67,38 @@ public class ByteArraySequenceReader implements SequenceReader
 
 	// --------------------- Interface SequenceReader ---------------------
 
+
+	public void close()
+		{
+		// Do Nothing
+		}
+
+	/*	public void checkCurrentPositionIsValidSequence() throws NotEnoughSequenceException
+		 {
+		 // Always valid for a byte array
+		 }
+
+	 public SectionFragmentMetadata nextSection() throws IOException
+		 {
+		 return new SectionFragmentMetadata(null, "Byte Array Sequence", 0, theBytes.length);
+		 }
+ */
+	public String getName()
+		{
+		return "Byte Array Sequence";
+		}
+
+	/*
+	 public void seek(int position) throws IOException // Seek to a particular position
+		 {
+		 pos = position;
+		 }
+ */
+	public int getTotalSequence()
+		{
+		return theBytes.length;
+		}
+
 	public byte read() throws NotEnoughSequenceException// Read one character from the buffer
 		{
 		try
@@ -94,39 +126,6 @@ public class ByteArraySequenceReader implements SequenceReader
 		return length;
 		}
 
-	/*
-	 public void seek(int position) throws IOException // Seek to a particular position
-		 {
-		 pos = position;
-		 }
- */
-	public int getTotalSequence()
-		{
-		return theBytes.length;
-		}
-
-	/*	public void checkCurrentPositionIsValidSequence() throws NotEnoughSequenceException
-		 {
-		 // Always valid for a byte array
-		 }
-
-	 public SectionFragmentMetadata nextSection() throws IOException
-		 {
-		 return new SectionFragmentMetadata(null, "Byte Array Sequence", 0, theBytes.length);
-		 }
- */
-	public String getName()
-		{
-		return "Byte Array Sequence";
-		}
-
-	public void close()
-		{
-		// Do Nothing
-		}
-
-	// -------------------------- OTHER METHODS --------------------------
-
 	/*public int toSectionStart()
 		{
 		return pos = 0;
@@ -147,7 +146,6 @@ public class ByteArraySequenceReader implements SequenceReader
 		{
 		pos = offset;
 		}
-
 
 	public void setTranslationAlphabet(byte[] alphabet)
 		{
