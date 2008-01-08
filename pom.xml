@@ -36,14 +36,14 @@
 	<artifactId>sequtils</artifactId>
 
 	<name>sequtils</name>
-	<version>1.0-SNAPSHOT</version>
+	<version>0.9-SNAPSHOT</version>
 	<url>http://dev.davidsoergel.com/sequtils</url>
 	<description>Convenience classes for dealing with sequence data.</description>
 
 	<parent>
 		<groupId>edu.berkeley.compbio</groupId>
 		<artifactId>basepom</artifactId>
-		<version>1.2-SNAPSHOT</version>
+		<version>0.9-SNAPSHOT</version>
 	</parent>
 
 	<inceptionYear>2006</inceptionYear>
@@ -54,14 +54,14 @@
 		<dependency>
 			<groupId>com.davidsoergel</groupId>
 			<artifactId>dsutils</artifactId>
-			<version>1.2-SNAPSHOT</version>
+			<version>0.9-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 
 	<scm>
-		<connection>scm:svn:svn+ssh://lorax.org/home/lorax/repos-compbio/sequtils</connection>
-		<developerConnection>scm:svn:svn+ssh://lorax.org/home/lorax/repos-compbio/sequtils</developerConnection>
+		<connection>scm:svn:svn+ssh://svn.davidsoergel.com/home/svn/repos-compbio/sequtils</connection>
+		<developerConnection>scm:svn:svn+ssh://svn.davidsoergel.com/home/svn/repos-compbio/sequtils</developerConnection>
 	</scm>
 	<distributionManagement>
 		<site>
