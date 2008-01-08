@@ -60,7 +60,7 @@
 	</dependencies>
 
 	<scm>
-		<connection>scm:svn:svn+ssh://svn.davidsoergel.com/home/svn/repos-compbio/sequtils</connection>
+		<connection>scm:svn:http://svn.davidsoergel.com/repos/sequtils</connection>
 		<developerConnection>scm:svn:svn+ssh://svn.davidsoergel.com/home/svn/repos-compbio/sequtils</developerConnection>
 	</scm>
 	<distributionManagement>
