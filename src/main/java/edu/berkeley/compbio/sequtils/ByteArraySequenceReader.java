@@ -32,8 +32,6 @@
 
 package edu.berkeley.compbio.sequtils;
 
-import org.apache.commons.lang.NotImplementedException;
-
 import java.io.IOException;
 
 
@@ -41,20 +39,21 @@ import java.io.IOException;
  * @author lorax
  * @version 1.0
  */
-public class ByteArraySequenceReader implements SequenceReader
+public class ByteArraySequenceReader extends TranslatingSequenceReader
 	{
 	// ------------------------------ FIELDS ------------------------------
 
 	//private static Logger logger = Logger.getLogger(ByteArraySequenceReader.class);
-	byte[] theBytes;
-	int pos = 0;
+	//byte[] theBytes;
+	//int pos = 0;
 
 
 	// --------------------------- CONSTRUCTORS ---------------------------
 
 	public ByteArraySequenceReader(byte[] b)
 		{
-		theBytes = b;
+		buf = b;
+		initTranslationBuffer(b.length);
 		}
 
 	public ByteArraySequenceReader(String s)
@@ -96,14 +95,14 @@ public class ByteArraySequenceReader implements SequenceReader
  */
 	public int getTotalSequence()
 		{
-		return theBytes.length;
+		return buf.length;
 		}
 
 	public byte read() throws NotEnoughSequenceException// Read one character from the buffer
 		{
 		try
 			{
-			return theBytes[pos++];
+			return buf[bufPosition++];
 			}
 		catch (IndexOutOfBoundsException e)
 			{
@@ -121,8 +120,8 @@ public class ByteArraySequenceReader implements SequenceReader
 	public int read(byte[] buffer, int length)
 			throws IOException, FilterException, NotEnoughSequenceException// Read one character from the buffer
 		{
-		length = Math.min(length, theBytes.length);
-		System.arraycopy(theBytes, pos, buffer, 0, length);
+		length = Math.min(length, buf.length);
+		System.arraycopy(buf, bufPosition, buffer, 0, length);
 		return length;
 		}
 
@@ -134,26 +133,16 @@ public class ByteArraySequenceReader implements SequenceReader
 
 	public void reset()
 		{
-		pos = 0;
+		bufPosition = 0;
 		}
 
 	public void seek(SequenceFragmentMetadata section) throws IOException
 		{
-		pos = 0;
+		bufPosition = 0;
 		}
 
 	public void seek(SequenceFragmentMetadata section, int offset) throws IOException
 		{
-		pos = offset;
-		}
-
-	public void setTranslationAlphabet(byte[] alphabet)
-		{
-		throw new NotImplementedException();
-		}
-
-	public int readTranslated() throws IOException, FilterException, NotEnoughSequenceException, TranslationException
-		{
-		throw new NotImplementedException();
+		bufPosition = offset;
 		}
 	}
