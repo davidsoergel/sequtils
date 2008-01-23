@@ -1,0 +1,3 @@
+Title: sequtils
+
+Utility classes for dealing with biological sequences.
