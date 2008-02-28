@@ -34,7 +34,7 @@ package edu.berkeley.compbio.sequtils;
 
 /**
  * Provides a container for information about a particular sequence.  Sequence fragments are related hierarchically by
- * containment; a largerfragment containing this one is called its "parent".  For instance, a given FASTA file bay
+ * containment; a larger fragment containing this one is called its "parent".  For instance, a given FASTA file bay
  * contain many different sequences.  In this case a SequenceFragmentMetadata representing the file as a whole is the
  * parent of the SequenceFragmentMetadatas representing each individual sequence.
  *
