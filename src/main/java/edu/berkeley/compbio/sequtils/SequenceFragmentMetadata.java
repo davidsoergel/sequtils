@@ -231,4 +231,54 @@ public class SequenceFragmentMetadata
 		{
 		return getRootSequenceName();
 		}
+
+
+	public boolean overlaps(SequenceFragmentMetadata other) throws SequenceException
+		{
+		try
+			{
+			if (!parentMetadata.equals(other.parentMetadata))// && other.parentMetadata != null (redundant)
+				{
+				return false;
+				}
+			}
+		catch (NullPointerException e)
+			{
+			throw new SequenceException("Can't determine overlap without parent metadata");
+			}
+
+		// OK, both parents exist and are equal
+
+		if (startPosition > other.startPosition)
+			{
+			if (other.length == UNKNOWN_LENGTH)
+				{
+				throw new SequenceException("Can't determine overlap for unknown length");
+				}
+			if (other.startPosition + other.length > startPosition)
+				{
+				return true;
+				}
+			return false;
+			}
+
+		else if (other.startPosition > startPosition)
+			{
+			if (length == UNKNOWN_LENGTH)
+				{
+				throw new SequenceException("Can't determine overlap for unknown length");
+				}
+			if (startPosition + length > other.startPosition)
+				{
+				return true;
+				}
+			return false;
+			}
+
+		else
+			// startPosition == other.startPosition
+			{
+			return true;
+			}
+		}
 	}
