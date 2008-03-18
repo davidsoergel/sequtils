@@ -43,7 +43,7 @@
 	<parent>
 		<groupId>edu.berkeley.compbio</groupId>
 		<artifactId>basepom</artifactId>
-		<version>0.9-SNAPSHOT</version>
+		<version>0.9</version>
 	</parent>
 
 	<inceptionYear>2006</inceptionYear>
@@ -57,10 +57,11 @@
 
 	<scm>
 		<connection>scm:svn:http://svn.davidsoergel.com/repos/sequtils</connection>
-		<developerConnection>scm:svn:svn+ssh://svn.davidsoergel.com/home/svn/repos-compbio/sequtils</developerConnection>
+		<developerConnection>scm:svn:svn+ssh://svn.davidsoergel.com/home/svn/repos-compbio/sequtils
+		</developerConnection>
 	</scm>
-	
-	
+
+
 	<distributionManagement>
 		<site>
 			<id>website</id>
@@ -70,22 +71,22 @@
 
 
 	<repositories>
-	    <repository>
-	        <id>central</id>
-	        <url>http://dev.davidsoergel.com/artifactory/repo</url>
-	        <snapshots>
-	            <enabled>false</enabled>
-	        </snapshots>
-	    </repository>
-	    <repository>
-	        <id>snapshots</id>
-	        <url>http://dev.davidsoergel.com/artifactory/repo</url>
-	        <releases>
-	            <enabled>false</enabled>
-	        </releases>
-	    </repository>
+		<repository>
+			<id>central</id>
+			<url>http://dev.davidsoergel.com/artifactory/repo</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>snapshots</id>
+			<url>http://dev.davidsoergel.com/artifactory/repo</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</repository>
 	</repositories>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>com.davidsoergel</groupId>
