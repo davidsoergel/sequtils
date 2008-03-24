@@ -135,12 +135,26 @@ public class SequenceFragmentMetadata
 		}
 
 	/**
-	 * Returns a String identifying this sequnce
+	 * Returns a String identifying this sequence.  If this sequence does not have its own unique name, give the name of
+	 * the parent sequence with the start position and length.
 	 *
-	 * @return a String identifying this sequnce
+	 * @return a String identifying this sequence
 	 */
 	public String getSequenceName()
 		{
+		if (sequenceName == null)
+			{
+			if (parentMetadata != null)
+				{
+				// this will never change so we may as well store it
+				sequenceName = parentMetadata.getSequenceName() + " (" + startPosition + ":" + length + ")";
+				}
+			else
+				{
+				sequenceName = "Sequence of Unknown Identity";
+				}
+			}
+
 		return sequenceName;
 		}
 
@@ -207,7 +221,7 @@ public class SequenceFragmentMetadata
 		}*/
 	public String toString()
 		{
-		return sequenceName + "(" + startPosition + ":" + length + ")";
+		return getSequenceName();
 		}
 
 	// -------------------------- OTHER METHODS --------------------------
