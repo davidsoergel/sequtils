@@ -30,7 +30,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* $Id: SequenceException.java 6 2007-07-02 23:32:25Z lorax $ */
+
 
 package edu.berkeley.compbio.sequtils;
 

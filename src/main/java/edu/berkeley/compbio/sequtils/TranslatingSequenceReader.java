@@ -35,7 +35,7 @@ package edu.berkeley.compbio.sequtils;
 import java.io.IOException;
 import java.util.Arrays;
 
-/* $Id$ */
+
 
 /**
  * @Author David Soergel
