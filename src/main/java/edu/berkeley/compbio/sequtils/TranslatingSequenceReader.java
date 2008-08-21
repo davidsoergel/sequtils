@@ -36,11 +36,6 @@ import java.io.IOException;
 import java.util.Arrays;
 
 
-
-/**
- * @Author David Soergel
- * @Version 1.0
- */
 public abstract class TranslatingSequenceReader implements SequenceReader
 	{
 

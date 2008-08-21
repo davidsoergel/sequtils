@@ -31,17 +31,13 @@
  */
 
 
-
 package edu.berkeley.compbio.sequtils;
 
 import org.apache.commons.lang.NotImplementedException;
 
 import java.io.IOException;
 
-/**
- * Created by IntelliJ IDEA. User: soergel Date: Sep 12, 2006 Time: 6:23:27 AM To change this template use File |
- * Settings | File Templates.
- */
+
 public class FilteringSequenceReader implements SequenceReader
 	{
 	// ------------------------------ FIELDS ------------------------------
