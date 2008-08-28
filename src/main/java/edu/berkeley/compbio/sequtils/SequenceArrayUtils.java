@@ -2,6 +2,8 @@ package edu.berkeley.compbio.sequtils;
 
 import org.apache.log4j.Logger;
 
+import java.util.Arrays;
+
 /**
  * @author lorax
  * @version 1.0
@@ -51,7 +53,7 @@ public class SequenceArrayUtils
 		catch (ArrayIndexOutOfBoundsException e)
 			{
 			e.printStackTrace();//To change body of catch statement use File | Settings | File Templates.
-			logger.error("" + from + " " + to + " " + j + " " + array);
+			logger.error("" + from + " " + to + " " + j + " " + Arrays.toString(array));
 			logger.error(e);
 			throw new SequenceArrayException(e);
 			}
@@ -131,7 +133,7 @@ public class SequenceArrayUtils
 		catch (ArrayIndexOutOfBoundsException e)
 			{
 			e.printStackTrace();//To change body of catch statement use File | Settings | File Templates.
-			logger.error("" + from + " " + to + " " + j + " " + array);
+			logger.error("" + from + " " + to + " " + j + " " + Arrays.toString(array));
 			logger.error(e);
 			throw new SequenceArrayException(e);
 			}
