@@ -31,7 +31,6 @@
  */
 
 
-
 package edu.berkeley.compbio.sequtils;
 
 import java.io.IOException;

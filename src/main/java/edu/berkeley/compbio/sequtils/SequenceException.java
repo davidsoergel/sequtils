@@ -31,7 +31,6 @@
  */
 
 
-
 package edu.berkeley.compbio.sequtils;
 
 import com.davidsoergel.dsutils.ChainedException;

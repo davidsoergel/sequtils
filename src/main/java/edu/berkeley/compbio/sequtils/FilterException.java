@@ -31,7 +31,6 @@
  */
 
 
-
 package edu.berkeley.compbio.sequtils;
 
 import org.apache.log4j.Logger;
