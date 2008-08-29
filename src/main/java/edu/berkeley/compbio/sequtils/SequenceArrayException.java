@@ -44,7 +44,7 @@ public class SequenceArrayException extends ChainedRuntimeException
 	{
 	// ------------------------------ FIELDS ------------------------------
 
-	private static Logger logger = Logger.getLogger(SequenceException.class);
+	private static final Logger logger = Logger.getLogger(SequenceException.class);
 
 
 	// --------------------------- CONSTRUCTORS ---------------------------

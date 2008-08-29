@@ -43,7 +43,7 @@ public abstract interface NucleotideFilter
 	{
 	// -------------------------- OTHER METHODS --------------------------
 
-	//private static Logger logger = Logger.getLogger(NucleotideFilter.class);
+	//private static final Logger logger = Logger.getLogger(NucleotideFilter.class);
 
 	byte filter(byte b) throws FilterException;
 

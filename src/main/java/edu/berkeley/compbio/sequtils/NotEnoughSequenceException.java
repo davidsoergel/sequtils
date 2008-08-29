@@ -45,7 +45,7 @@ public class NotEnoughSequenceException extends SequenceException
 	{
 	// --------------------------- CONSTRUCTORS ---------------------------
 
-	//private static Logger logger = Logger.getLogger(NotEnoughSequenceException.class);
+	//private static final Logger logger = Logger.getLogger(NotEnoughSequenceException.class);
 	/*
 	 public NotEnoughSequenceException()
 		 {

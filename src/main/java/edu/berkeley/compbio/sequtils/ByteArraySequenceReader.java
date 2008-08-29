@@ -44,7 +44,7 @@ public class ByteArraySequenceReader extends TranslatingSequenceReader
 	{
 	// ------------------------------ FIELDS ------------------------------
 
-	//private static Logger logger = Logger.getLogger(ByteArraySequenceReader.class);
+	//private static final Logger logger = Logger.getLogger(ByteArraySequenceReader.class);
 	//byte[] theBytes;
 	//int pos = 0;
 

@@ -11,11 +11,11 @@ import java.util.Arrays;
 //@PropertyConsumer
 public class SequenceArrayUtils
 	{
-	private static Logger logger = Logger.getLogger(SequenceArrayUtils.class);
-	public static char GAP_CHAR = '-';
+	private static final Logger logger = Logger.getLogger(SequenceArrayUtils.class);
+	public static final char GAP_CHAR = '-';
 
 	//@Property(helpmessage = "Characters representing gaps", defaultvalue = ".- ")
-	public static String gapChars = ".- ";
+	public static final String gapChars = ".- ";
 
 
 	public SequenceArrayUtils()
