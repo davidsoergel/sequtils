@@ -41,6 +41,7 @@ import java.io.IOException;
  * transparently.
  *
  * @author David Tulga
+ * @version $Id$
  */
 public interface SequenceReader
 	{
@@ -115,6 +116,13 @@ public interface SequenceReader
 	int read(byte[] buffer, int length)
 			throws IOException, FilterException, NotEnoughSequenceException;// Read one character from the buffer
 
+	/**
+	 * Returns the next nucleotide, after mapping the byte through a translation table associated with the reader.
+	 * Typically used to map Roman characters representing nucleotides to the integers 0-3.
+	 *
+	 * @return The next nucleotide, using the translated alphabet, or EOF if the section or file has ended
+	 * @see #setTranslationAlphabet()
+	 */
 	int readTranslated() throws IOException, FilterException, NotEnoughSequenceException, TranslationException;
 
 	/**
@@ -122,10 +130,32 @@ public interface SequenceReader
 	 */
 	void reset();
 
-
+	/**
+	 * Set the location of the reader to that specified by the given SequenceFragmentMetadata, so that the next read()
+	 * operation will return the first character of the specified SequenceFragment.
+	 *
+	 * @param section
+	 * @throws IOException
+	 */
 	void seek(SequenceFragmentMetadata section) throws IOException;
 
+	/**
+	 * Set the location of the reader to an offset beyond the location specified by the given SequenceFragmentMetadata, so
+	 * that the next read() operation will return the character at that offset of the specified SequenceFragment.
+	 *
+	 * @param section
+	 * @throws IOException
+	 */
 	void seek(SequenceFragmentMetadata section, int offset) throws IOException;
 
+	/**
+	 * Set the character mapping to be used when reading nucleotides.
+	 *
+	 * @param alphabet A byte[] representing the byte translation table.  The mapping is specified in reverse: the desired
+	 *                 translated value is the index of the input array, and the values in the array are the corresponding
+	 *                 input characters to be mapped.  For example, the mapping 'A'->0, 'C'->1, 'G'->2, 'T'->3 is
+	 *                 represented as new byte[]{'A','C','G','T'}.
+	 * @see #readTranslated()
+	 */
 	void setTranslationAlphabet(byte[] alphabet);
 	}

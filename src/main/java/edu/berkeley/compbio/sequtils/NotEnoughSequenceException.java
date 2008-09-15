@@ -40,6 +40,7 @@ package edu.berkeley.compbio.sequtils;
  * or being inside a header.
  *
  * @author David Tulga
+ * @version $Id$
  */
 public class NotEnoughSequenceException extends SequenceException
 	{

@@ -38,6 +38,11 @@ import org.apache.commons.lang.NotImplementedException;
 import java.io.IOException;
 
 
+/**
+ * @author <a href="mailto:dev.davidsoergel.com">David Soergel</a>
+ * @version $Id$
+ */
+
 public class FilteringSequenceReader implements SequenceReader
 	{
 	// ------------------------------ FIELDS ------------------------------
@@ -61,7 +66,7 @@ public class FilteringSequenceReader implements SequenceReader
 
 
 	/**
-	 * Closes the reader, and all sub-readers
+	 * {@inheritDoc}
 	 */
 	public void close()
 		{
@@ -69,9 +74,7 @@ public class FilteringSequenceReader implements SequenceReader
 		}
 
 	/**
-	 * Returns the species name of this reader
-	 *
-	 * @return A String representing the name of the sequence
+	 * {@inheritDoc}
 	 */
 	public String getName()
 		{
@@ -79,20 +82,24 @@ public class FilteringSequenceReader implements SequenceReader
 		}
 
 	/**
-	 * Returns the total amount of sequence present in this reader
-	 *
-	 * @return The total amount of sequence
+	 * {@inheritDoc}
 	 */
 	public int getTotalSequence()
 		{
 		return base.getTotalSequence();
 		}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public byte read() throws IOException, FilterException, NotEnoughSequenceException
 		{
 		return filter.filter(base.read());
 		}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public int read(byte[] buffer, int length) throws IOException, FilterException, NotEnoughSequenceException
 		{
 		int valid = base.read(buffer, length);
@@ -109,21 +116,33 @@ public class FilteringSequenceReader implements SequenceReader
 		base.reset();
 		}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void seek(SequenceFragmentMetadata section) throws IOException
 		{
 		base.seek(section);
 		}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void seek(SequenceFragmentMetadata section, int offset) throws IOException
 		{
 		base.seek(section, offset);
 		}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void setTranslationAlphabet(byte[] alphabet)
 		{
 		throw new NotImplementedException();
 		}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public int readTranslated() throws IOException, FilterException, NotEnoughSequenceException, TranslationException
 		{
 		throw new NotImplementedException();

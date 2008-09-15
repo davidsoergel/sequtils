@@ -20,6 +20,7 @@ public class SequenceArrayUtils
 
 	public SequenceArrayUtils()
 		{
+
 		}
 
 	public static void rotate(char array[], int from, int to) throws SequenceArrayException

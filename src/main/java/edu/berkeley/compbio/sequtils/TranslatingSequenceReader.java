@@ -36,6 +36,11 @@ import java.io.IOException;
 import java.util.Arrays;
 
 
+/**
+ * @author <a href="mailto:dev.davidsoergel.com">David Soergel</a>
+ * @version $Id$
+ */
+
 public abstract class TranslatingSequenceReader implements SequenceReader
 	{
 
@@ -58,6 +63,9 @@ public abstract class TranslatingSequenceReader implements SequenceReader
 		buf = new byte[buffersize];
 		}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void setTranslationAlphabet(byte[] translationAlphabet)
 		{
 		if (!Arrays.equals(this.translationAlphabet, translationAlphabet))
@@ -67,6 +75,9 @@ public abstract class TranslatingSequenceReader implements SequenceReader
 			}
 		}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public int readTranslated() throws IOException, FilterException, NotEnoughSequenceException, TranslationException
 		{
 		read();

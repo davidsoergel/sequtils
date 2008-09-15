@@ -68,37 +68,49 @@ public class ByteArraySequenceReader extends TranslatingSequenceReader
 	// --------------------- Interface SequenceReader ---------------------
 
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void close()
 		{
 		// Do Nothing
 		}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	/*	public void checkCurrentPositionIsValidSequence() throws NotEnoughSequenceException
-		 {
-		 // Always valid for a byte array
-		 }
+			 {
+			 // Always valid for a byte array
+			 }
 
-	 public SectionFragmentMetadata nextSection() throws IOException
-		 {
-		 return new SectionFragmentMetadata(null, "Byte Array Sequence", 0, theBytes.length);
-		 }
- */
+		 public SectionFragmentMetadata nextSection() throws IOException
+			 {
+			 return new SectionFragmentMetadata(null, "Byte Array Sequence", 0, theBytes.length);
+			 }
+	 */
 	public String getName()
 		{
 		return "Byte Array Sequence";
 		}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	/*
-	 public void seek(int position) throws IOException // Seek to a particular position
-		 {
-		 pos = position;
-		 }
- */
+		 public void seek(int position) throws IOException // Seek to a particular position
+			 {
+			 pos = position;
+			 }
+	 */
 	public int getTotalSequence()
 		{
 		return buf.length;
 		}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public byte read() throws NotEnoughSequenceException// Read one character from the buffer
 		{
 		try
@@ -112,11 +124,7 @@ public class ByteArraySequenceReader extends TranslatingSequenceReader
 		}
 
 	/**
-	 * Reads nucleotides into a byte array
-	 *
-	 * @param buffer a byte[] to read into.
-	 * @param length how many nucleotides to read (must be less than or equal to the size of the given buffer)
-	 * @return The number of nucleotides read
+	 * {@inheritDoc}
 	 */
 	public int read(byte[] buffer, int length)
 			throws IOException, FilterException, NotEnoughSequenceException// Read one character from the buffer
@@ -132,16 +140,25 @@ public class ByteArraySequenceReader extends TranslatingSequenceReader
 		}*/
 
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void reset()
 		{
 		bufPosition = 0;
 		}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void seek(SequenceFragmentMetadata section) throws IOException
 		{
 		bufPosition = 0;
 		}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void seek(SequenceFragmentMetadata section, int offset) throws IOException
 		{
 		bufPosition = offset;

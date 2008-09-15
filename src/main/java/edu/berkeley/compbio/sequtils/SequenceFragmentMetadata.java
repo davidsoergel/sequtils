@@ -35,11 +35,12 @@ package edu.berkeley.compbio.sequtils;
 
 /**
  * Provides a container for information about a particular sequence.  Sequence fragments are related hierarchically by
- * containment; a larger fragment containing this one is called its "parent".  For instance, a given FASTA file bay
+ * containment; a larger fragment containing this one is called its "parent".  For instance, a given FASTA file may
  * contain many different sequences.  In this case a SequenceFragmentMetadata representing the file as a whole is the
  * parent of the SequenceFragmentMetadatas representing each individual sequence.
  *
  * @author David Soergel
+ * @version $Id$
  */
 public class SequenceFragmentMetadata
 	{
@@ -195,6 +196,11 @@ public class SequenceFragmentMetadata
 	   return new SequenceFragmentMetadata(parentMetadata, sequenceName, startPosition, length);
 	   }*/
 
+	/**
+	 * Returns the NCBI taxid of the taxon to which this sequence belongs
+	 *
+	 * @return
+	 */
 	public Integer getTaxid()
 		{
 		return taxid;
@@ -220,6 +226,10 @@ public class SequenceFragmentMetadata
 		startPosition = 0;
 		length = 0;
 		}*/
+	/**
+	 *
+	 */
+	@Override
 	public String toString()
 		{
 		return getSequenceName();
@@ -247,7 +257,13 @@ public class SequenceFragmentMetadata
 		return getRootSequenceName();
 		}
 
-
+	/**
+	 * Tells whether this fragment overlaps with another.
+	 *
+	 * @param other
+	 * @return true if the sequence fragments overlap, false otherwise.
+	 * @throws SequenceException
+	 */
 	public boolean overlaps(SequenceFragmentMetadata other) throws SequenceException
 		{
 		try
