@@ -37,6 +37,7 @@
 	<test name="sequtils">
 		<packages>
 			<package name="edu.berkeley.compbio.sequtils"/>
+			<package name="edu.berkeley.compbio.sequtils.*"/>
 		</packages>
 	</test>
 </suite>
