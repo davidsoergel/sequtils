@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 import java.util.Arrays;
 
 /**
- * @author lorax
  * @version 1.0
  */
 //@PropertyConsumer

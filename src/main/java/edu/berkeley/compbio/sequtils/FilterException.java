@@ -36,7 +36,6 @@ package edu.berkeley.compbio.sequtils;
 import org.apache.log4j.Logger;
 
 /**
- * @author lorax
  * @version 1.0
  */
 public class FilterException extends SequenceException

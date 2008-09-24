@@ -37,7 +37,6 @@ import java.io.IOException;
 
 
 /**
- * @author lorax
  * @version 1.0
  */
 public class ByteArraySequenceReader extends TranslatingSequenceReader
