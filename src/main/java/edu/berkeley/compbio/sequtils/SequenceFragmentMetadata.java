@@ -33,6 +33,9 @@
 
 package edu.berkeley.compbio.sequtils;
 
+import com.davidsoergel.dsutils.collections.HashWeightedSet;
+import com.davidsoergel.dsutils.collections.WeightedSet;
+
 /**
  * Provides a container for information about a particular sequence.  Sequence fragments are related hierarchically by
  * containment; a larger fragment containing this one is called its "parent".  For instance, a given FASTA file may
@@ -255,6 +258,13 @@ public class SequenceFragmentMetadata
 	public String getLabel()
 		{
 		return getRootSequenceName();
+		}
+
+	private WeightedSet<String> weightedLabels = new HashWeightedSet<String>();
+
+	public WeightedSet<String> getWeightedLabels()
+		{
+		return weightedLabels;
 		}
 
 	/**
