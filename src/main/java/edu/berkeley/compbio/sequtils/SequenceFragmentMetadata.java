@@ -322,4 +322,53 @@ public class SequenceFragmentMetadata
 			return true;
 			}
 		}
+
+	public boolean equals(Object o)
+		{
+		if (this == o)
+			{
+			return true;
+			}
+		if (o == null || getClass() != o.getClass())
+			{
+			return false;
+			}
+
+		SequenceFragmentMetadata that = (SequenceFragmentMetadata) o;
+
+		if (length != that.length)
+			{
+			return false;
+			}
+		if (startPosition != that.startPosition)
+			{
+			return false;
+			}
+		if (parentMetadata != null ? !parentMetadata.equals(that.parentMetadata) : that.parentMetadata != null)
+			{
+			return false;
+			}
+		if (sequenceName != null ? !sequenceName.equals(that.sequenceName) : that.sequenceName != null)
+			{
+			return false;
+			}
+		if (taxid != null ? !taxid.equals(that.taxid) : that.taxid != null)
+			{
+			return false;
+			}
+
+		return true;
+		}
+
+	public int hashCode()
+		{
+		int result;
+		result = length;
+		result = 31 * result + (parentMetadata != null ? parentMetadata.hashCode() : 0);
+		result = 31 * result + (sequenceName != null ? sequenceName.hashCode() : 0);
+		result = 31 * result + startPosition;
+		result = 31 * result + (taxid != null ? taxid.hashCode() : 0);
+		result = 31 * result + (weightedLabels != null ? weightedLabels.hashCode() : 0);
+		return result;
+		}
 	}
