@@ -60,6 +60,7 @@ public class SequenceFragmentMetadata
 	protected int startPosition = 0;
 	private Integer taxid;
 
+	private WeightedSet<String> weightedLabels = new HashWeightedSet<String>();
 
 	// --------------------------- CONSTRUCTORS ---------------------------
 
@@ -255,12 +256,11 @@ public class SequenceFragmentMetadata
 		return getSequenceName();
 		}
 
-	public String getExclusiveLabel()
-		{
-		return getRootSequenceName();
-		}
-
-	private WeightedSet<String> weightedLabels = new HashWeightedSet<String>();
+	/*	public String getExclusiveLabel()
+		 {
+		 return getRootSequenceName();
+		 }
+ */
 
 	public WeightedSet<String> getWeightedLabels()
 		{
