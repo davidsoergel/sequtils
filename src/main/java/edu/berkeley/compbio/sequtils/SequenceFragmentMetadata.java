@@ -255,7 +255,7 @@ public class SequenceFragmentMetadata
 		return getSequenceName();
 		}
 
-	public String getLabel()
+	public String getExclusiveLabel()
 		{
 		return getRootSequenceName();
 		}
