@@ -80,7 +80,10 @@ public abstract class TranslatingSequenceReader implements SequenceReader
 	 */
 	public int readTranslated() throws IOException, FilterException, NotEnoughSequenceException, TranslationException
 		{
+		// make sure the buffer is valid
 		read();
+
+		// then translate it if needed
 		if (!translationValid)
 			{
 			translate();
