@@ -41,6 +41,9 @@ import com.davidsoergel.dsutils.collections.WeightedSet;
  * containment; a larger fragment containing this one is called its "parent".  For instance, a given FASTA file may
  * contain many different sequences.  In this case a SequenceFragmentMetadata representing the file as a whole is the
  * parent of the SequenceFragmentMetadatas representing each individual sequence.
+ * <p/>
+ * While a SequenceFragmentMetadata may consist of unconnected sequences (e.g., chromosomes), it assumes these are
+ * contiguous, and in a consistent order, for the sake of sequence coordinates.
  *
  * @author David Soergel
  * @version $Id$
