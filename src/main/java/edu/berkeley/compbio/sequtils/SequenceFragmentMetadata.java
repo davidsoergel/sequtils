@@ -52,7 +52,7 @@ public class SequenceFragmentMetadata implements Comparable
 	{
 	// ------------------------------ FIELDS ------------------------------
 
-	public static final int UNKNOWN_LENGTH = -1;
+	public static final int UNKNOWN_LENGTH = Integer.MAX_VALUE;
 
 	// this is public so we can increment it directly (better performance?)
 	public int length = 0;
