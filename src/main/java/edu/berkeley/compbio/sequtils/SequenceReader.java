@@ -121,7 +121,7 @@ public interface SequenceReader
 	 * Typically used to map Roman characters representing nucleotides to the integers 0-3.
 	 *
 	 * @return The next nucleotide, using the translated alphabet, or EOF if the section or file has ended
-	 * @see #setTranslationAlphabet()
+	 * @see #setTranslationAlphabet(byte[] alphabet)
 	 */
 	int readTranslated() throws IOException, FilterException, NotEnoughSequenceException, TranslationException;
 
