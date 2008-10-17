@@ -33,8 +33,6 @@
 
 package edu.berkeley.compbio.sequtils;
 
-import org.apache.commons.lang.NotImplementedException;
-
 import java.io.IOException;
 
 
@@ -47,16 +45,24 @@ public class FilteringSequenceReader implements SequenceReader
 	{
 	// ------------------------------ FIELDS ------------------------------
 
+	//private static final int DEFAULT_BUFFER_SIZE = 16384;
 	private SequenceReader base;
 	private NucleotideFilter filter;
 
 
 	// --------------------------- CONSTRUCTORS ---------------------------
+	/*	public FilteringSequenceReader(SequenceReader base, NucleotideFilter filter)
+	   {
+	   this(base, filter, DEFAULT_BUFFER_SIZE);
+	   }*/
 
 	public FilteringSequenceReader(SequenceReader base, NucleotideFilter filter)
 		{
 		this.base = base;
 		this.filter = filter;
+
+		//	initMainBuffer(buffersize);
+		//	initTranslationBuffer(buffersize);
 		}
 
 	// ------------------------ INTERFACE METHODS ------------------------
@@ -108,6 +114,26 @@ public class FilteringSequenceReader implements SequenceReader
 		}
 
 	/**
+	 * Returns the next nucleotide, after mapping the byte through a translation table associated with the reader.
+	 * Typically used to map Roman characters representing nucleotides to the integers 0-3.
+	 *
+	 * @return The next nucleotide, using the translated alphabet, or EOF if the section or file has ended
+	 * @see #setTranslationAlphabet(byte[] alphabet)
+	 */
+	public int readTranslated() throws IOException, FilterException, NotEnoughSequenceException, TranslationException
+		{
+		byte c = read();
+		for (int i = 0; i < translationAlphabet.length; i++)
+			{
+			if (c == translationAlphabet[i])
+				{
+				return i;
+				}
+			}
+		throw new TranslationException("Character not in translation alphabet: " + c);
+		}
+
+	/**
 	 * resets the base reader.  Note that the filter will be applied anew on the next read, so the provided sequence may
 	 * differ after a reset.
 	 */
@@ -133,18 +159,18 @@ public class FilteringSequenceReader implements SequenceReader
 		}
 
 	/**
-	 * {@inheritDoc}
+	 * Set the character mapping to be used when reading nucleotides.
+	 *
+	 * @param alphabet A byte[] representing the byte translation table.  The mapping is specified in reverse: the desired
+	 *                 translated value is the index of the input array, and the values in the array are the corresponding
+	 *                 input characters to be mapped.  For example, the mapping 'A'->0, 'C'->1, 'G'->2, 'T'->3 is
+	 *                 represented as new byte[]{'A','C','G','T'}.
+	 * @see #readTranslated()
 	 */
 	public void setTranslationAlphabet(byte[] alphabet)
 		{
-		throw new NotImplementedException();
+		translationAlphabet = alphabet;
 		}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public int readTranslated() throws IOException, FilterException, NotEnoughSequenceException, TranslationException
-		{
-		throw new NotImplementedException();
-		}
+	private byte[] translationAlphabet;
 	}
