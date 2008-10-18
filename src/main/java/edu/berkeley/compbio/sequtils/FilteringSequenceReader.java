@@ -35,6 +35,7 @@ package edu.berkeley.compbio.sequtils;
 
 import java.io.IOException;
 
+// PERF
 
 /**
  * @author <a href="mailto:dev@davidsoergel.com">David Soergel</a>
