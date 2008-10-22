@@ -35,6 +35,7 @@ package edu.berkeley.compbio.sequtils;
 
 import com.davidsoergel.dsutils.collections.HashWeightedSet;
 import com.davidsoergel.dsutils.collections.WeightedSet;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Provides a container for information about a particular sequence.  Sequence fragments are related hierarchically by
@@ -149,6 +150,7 @@ public class SequenceFragmentMetadata implements Comparable
 	 *
 	 * @return a String identifying this sequence
 	 */
+	@NotNull
 	public String getSequenceName()
 		{
 		if (sequenceName == null)
@@ -250,6 +252,7 @@ public class SequenceFragmentMetadata implements Comparable
 	 *
 	 * @return a String identifying the largest sequence to which this fragment belongs
 	 */
+	@NotNull
 	public String getRootSequenceName()
 		{
 		if (parentMetadata != null)
