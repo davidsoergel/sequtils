@@ -289,7 +289,7 @@ public class SequenceFragmentMetadata implements Comparable
 		{
 		try
 			{
-			if (!parentMetadata.equals(other.parentMetadata))// && other.parentMetadata != null (redundant)
+			if (!parentMetadata.equalValue(other.parentMetadata))// && other.parentMetadata != null (redundant)
 				{
 				return false;
 				}
@@ -367,18 +367,18 @@ public class SequenceFragmentMetadata implements Comparable
 		return toString().compareTo(o.toString());
 		}
 
-	public boolean equals(Object o)
+	public boolean equalValue(SequenceFragmentMetadata that)// o)
 		{
-		if (this == o)
+		if (this == that)
 			{
 			return true;
 			}
-		if (o == null || getClass() != o.getClass())
+		if (that == null || getClass() != that.getClass())
 			{
 			return false;
 			}
 
-		SequenceFragmentMetadata that = (SequenceFragmentMetadata) o;
+		//SequenceFragmentMetadata that = (SequenceFragmentMetadata) o;
 
 		if (length != that.length)
 			{
@@ -404,6 +404,9 @@ public class SequenceFragmentMetadata implements Comparable
 		return true;
 		}
 
+	// can't use hashCode with non-final variables.  Therefore, don't implement equals() either; just add a separate method for content equality
+
+	/*
 	public int hashCode()
 		{
 		int result;
@@ -414,5 +417,5 @@ public class SequenceFragmentMetadata implements Comparable
 		result = 31 * result + (taxid != null ? taxid.hashCode() : 0);
 		result = 31 * result + (weightedLabels != null ? weightedLabels.hashCode() : 0);
 		return result;
-		}
+		}*/
 	}
