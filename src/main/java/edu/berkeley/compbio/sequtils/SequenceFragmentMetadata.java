@@ -175,7 +175,7 @@ public class SequenceFragmentMetadata implements Comparable
 		}
 
 	/**
-	 * Sets a String identifying this sequnce
+	 * Sets a String identifying this sequence
 	 *
 	 * @param sequenceName a String identifying this sequnce
 	 */
