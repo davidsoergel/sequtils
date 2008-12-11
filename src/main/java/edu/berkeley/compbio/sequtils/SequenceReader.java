@@ -158,4 +158,10 @@ public interface SequenceReader
 	 * @see #readTranslated()
 	 */
 	void setTranslationAlphabet(byte[] alphabet);
+
+
+	/**
+	 * Frees up memory, filehandles, etc. from caches that can be re-filled if necessary
+	 */
+//	void releaseCachedResources();
 	}
