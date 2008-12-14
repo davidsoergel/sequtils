@@ -303,7 +303,7 @@ public class SequenceFragmentMetadata implements Comparable
 
 		if (startPosition > other.startPosition)
 			{
-			if (other.length == UNKNOWN_LENGTH)
+			if (other.getLength() == UNKNOWN_LENGTH)
 				{
 				throw new SequenceException("Can't determine overlap for unknown length");
 				}
@@ -316,7 +316,7 @@ public class SequenceFragmentMetadata implements Comparable
 
 		else if (other.startPosition > startPosition)
 			{
-			if (length == UNKNOWN_LENGTH)
+			if (getLength() == UNKNOWN_LENGTH)
 				{
 				throw new SequenceException("Can't determine overlap for unknown length");
 				}
