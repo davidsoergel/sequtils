@@ -49,7 +49,7 @@ import org.jetbrains.annotations.NotNull;
  * @author David Soergel
  * @version $Id$
  */
-public class SequenceFragmentMetadata implements Comparable
+public class SequenceFragmentMetadata implements Comparable //, WeightedLabelCarrier
 	{
 	// ------------------------------ FIELDS ------------------------------
 
