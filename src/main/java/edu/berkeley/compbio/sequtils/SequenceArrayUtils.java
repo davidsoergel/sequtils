@@ -52,7 +52,6 @@ public class SequenceArrayUtils
 			}
 		catch (ArrayIndexOutOfBoundsException e)
 			{
-			e.printStackTrace();//To change body of catch statement use File | Settings | File Templates.
 			logger.error("" + from + " " + to + " " + j + " " + Arrays.toString(array));
 			logger.error(e);
 			throw new SequenceArrayException(e);
@@ -87,7 +86,7 @@ public class SequenceArrayUtils
 		char[] temp = temp_tl.get();
 		if (temp == null || temp.length < array.length)
 			{
-			logger.info("Rotate: allocating new temp array of size " + array.length * 2);
+			logger.debug("Rotate: allocating new temp array of size " + array.length * 2);
 			temp = (new char[array.length * 2]);
 			temp_tl.set(temp);
 			}
@@ -132,7 +131,6 @@ public class SequenceArrayUtils
 			}
 		catch (ArrayIndexOutOfBoundsException e)
 			{
-			e.printStackTrace();//To change body of catch statement use File | Settings | File Templates.
 			logger.error("" + from + " " + to + " " + j + " " + Arrays.toString(array));
 			logger.error(e);
 			throw new SequenceArrayException(e);
@@ -168,7 +166,6 @@ public class SequenceArrayUtils
 			}
 		catch (ArrayIndexOutOfBoundsException e)
 			{
-			e.printStackTrace();//To change body of catch statement use File | Settings | File Templates.
 			logger.error("" + from + " " + to + " " + j);
 			logger.error(e);
 			throw new SequenceArrayException(e);
@@ -218,7 +215,6 @@ public class SequenceArrayUtils
 			}
 		catch (ArrayIndexOutOfBoundsException e)
 			{
-			e.printStackTrace();//To change body of catch statement use File | Settings | File Templates.
 			logger.error("" + from + " " + to + " " + j);
 			logger.error(e);
 			throw new SequenceArrayException(e);
@@ -325,7 +321,6 @@ public class SequenceArrayUtils
 			}
 		catch (ArrayIndexOutOfBoundsException e)
 			{
-			e.printStackTrace();//To change body of catch statement use File | Settings | File Templates.
 			logger.error(e);
 			throw new SequenceArrayException(e);
 			}
