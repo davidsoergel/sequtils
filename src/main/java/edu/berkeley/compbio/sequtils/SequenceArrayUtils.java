@@ -53,7 +53,7 @@ public class SequenceArrayUtils
 		catch (ArrayIndexOutOfBoundsException e)
 			{
 			logger.error("" + from + " " + to + " " + j + " " + Arrays.toString(array));
-			logger.error(e);
+			logger.error("Error", e);
 			throw new SequenceArrayException(e);
 			}
 		}
@@ -132,7 +132,7 @@ public class SequenceArrayUtils
 		catch (ArrayIndexOutOfBoundsException e)
 			{
 			logger.error("" + from + " " + to + " " + j + " " + Arrays.toString(array));
-			logger.error(e);
+			logger.error("Error", e);
 			throw new SequenceArrayException(e);
 			}
 		}
@@ -167,7 +167,7 @@ public class SequenceArrayUtils
 		catch (ArrayIndexOutOfBoundsException e)
 			{
 			logger.error("" + from + " " + to + " " + j);
-			logger.error(e);
+			logger.error("Error", e);
 			throw new SequenceArrayException(e);
 			}
 		}
@@ -216,7 +216,7 @@ public class SequenceArrayUtils
 		catch (ArrayIndexOutOfBoundsException e)
 			{
 			logger.error("" + from + " " + to + " " + j);
-			logger.error(e);
+			logger.error("Error", e);
 			throw new SequenceArrayException(e);
 			}
 		}
@@ -277,8 +277,9 @@ public class SequenceArrayUtils
 		//logger.debug(new String(x));
 
 		// the requested non-gap index exceeds the number of available characters by a lot; invalid
-		logger.debug("Requested non-gap index exceeds number of available characters by more than one: " + idx + " "
-				+ count + " " + x.length);
+		logger.debug(
+				"Requested non-gap index exceeds number of available characters by more than one: " + idx + " " + count
+						+ " " + x.length);
 		throw new SequenceArrayException("Requested sequence index out of range");
 		}
 
@@ -321,7 +322,7 @@ public class SequenceArrayUtils
 			}
 		catch (ArrayIndexOutOfBoundsException e)
 			{
-			logger.error(e);
+			logger.error("Error", e);
 			throw new SequenceArrayException(e);
 			}
 		}
