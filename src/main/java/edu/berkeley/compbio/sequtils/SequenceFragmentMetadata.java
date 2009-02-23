@@ -289,7 +289,7 @@ public class SequenceFragmentMetadata implements Comparable //, WeightedLabelCar
 		{
 		try
 			{
-			if (!parentMetadata.equalValue(other.parentMetadata))// && other.parentMetadata != null (redundant)
+			if (!getRootMetadata().equalValue(other.getRootMetadata()))// && other.parentMetadata != null (redundant)
 				{
 				return false;
 				}
@@ -300,27 +300,29 @@ public class SequenceFragmentMetadata implements Comparable //, WeightedLabelCar
 			}
 
 		// OK, both parents exist and are equal
+		int thisStart = getStartPositionFromRoot();
+		int otherStart = other.getStartPositionFromRoot();
 
-		if (startPosition > other.startPosition)
+		if (thisStart > otherStart)
 			{
 			if (other.getLength() == UNKNOWN_LENGTH)
 				{
 				throw new SequenceException("Can't determine overlap for unknown length");
 				}
-			if (other.startPosition + other.length > startPosition)
+			if (otherStart + other.length > startPosition)
 				{
 				return true;
 				}
 			return false;
 			}
 
-		else if (other.startPosition > startPosition)
+		else if (otherStart > thisStart)
 			{
 			if (getLength() == UNKNOWN_LENGTH)
 				{
 				throw new SequenceException("Can't determine overlap for unknown length");
 				}
-			if (startPosition + length > other.startPosition)
+			if (thisStart + length > otherStart)
 				{
 				return true;
 				}
