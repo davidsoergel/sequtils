@@ -194,6 +194,15 @@ public class SequenceFragmentMetadata implements Comparable //, WeightedLabelCar
 		return startPosition;
 		}
 
+	public int getStartPositionFromRoot()
+		{
+		if (parentMetadata != null)
+			{
+			return startPosition + parentMetadata.getStartPositionFromRoot();
+			}
+		return startPosition;
+		}
+
 	/**
 	 * Sets the start position of this sequence, a 0-based index with respect to the parent sequence.
 	 *
@@ -260,11 +269,23 @@ public class SequenceFragmentMetadata implements Comparable //, WeightedLabelCar
 	@NotNull
 	public String getRootSequenceName()
 		{
+		return getRootMetadata().getSequenceName();
+		}
+
+	/**
+	 * Returns a String identifying the largest sequence to which this fragment belongs (i.e., the root af the parent
+	 * hierarchy)
+	 *
+	 * @return a String identifying the largest sequence to which this fragment belongs
+	 */
+	@NotNull
+	public SequenceFragmentMetadata getRootMetadata()
+		{
 		if (parentMetadata != null)
 			{
-			return parentMetadata.getRootSequenceName();
+			return parentMetadata.getRootMetadata();
 			}
-		return getSequenceName();
+		return this;
 		}
 
 	/*	public String getExclusiveLabel()
@@ -366,7 +387,13 @@ public class SequenceFragmentMetadata implements Comparable //, WeightedLabelCar
 	 */
 	public int compareTo(Object o)
 		{
-		return toString().compareTo(o.toString());
+		SequenceFragmentMetadata osfm = ((SequenceFragmentMetadata) o);
+		int result = getRootSequenceName().compareTo(osfm.getRootSequenceName());
+		if (result == 0)
+			{
+			result = getStartPositionFromRoot() - osfm.getStartPositionFromRoot();
+			}
+		return result;
 		}
 
 	public boolean equalValue(SequenceFragmentMetadata that)// o)
