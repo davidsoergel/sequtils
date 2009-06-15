@@ -294,6 +294,7 @@ public class SequenceFragmentMetadata implements Comparable //, WeightedLabelCar
 		 }
  */
 
+	@NotNull
 	public WeightedSet<String> getWeightedLabels()
 		{
 		return weightedLabels;
