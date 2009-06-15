@@ -307,7 +307,7 @@ public class SequenceFragmentMetadata implements Comparable //, WeightedLabelCar
 	 * @return true if the sequence fragments overlap, false otherwise.
 	 * @throws SequenceException
 	 */
-	public boolean overlaps(SequenceFragmentMetadata other) throws SequenceException
+	public boolean overlaps(@NotNull SequenceFragmentMetadata other) throws SequenceException
 		{
 		try
 			{
