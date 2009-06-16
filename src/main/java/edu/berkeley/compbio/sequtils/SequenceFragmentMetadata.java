@@ -123,7 +123,7 @@ public class SequenceFragmentMetadata implements Comparable //, WeightedLabelCar
 	 *
 	 * @param length the length of this sequence
 	 */
-	public void setLength(int length)
+	public synchronized void setLength(int length)
 		{
 		this.length = length;
 		}
