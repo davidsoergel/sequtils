@@ -66,13 +66,15 @@ public abstract class TranslatingSequenceReader implements SequenceReader
 	/**
 	 * {@inheritDoc}
 	 */
-	public void setTranslationAlphabet(byte[] translationAlphabet)
+	public boolean setTranslationAlphabet(byte[] translationAlphabet)
 		{
 		if (!Arrays.equals(this.translationAlphabet, translationAlphabet))
 			{
 			this.translationAlphabet = translationAlphabet;
 			translationValid = false;
+			return true;
 			}
+		return false;
 		}
 
 	/**
@@ -89,7 +91,7 @@ public abstract class TranslatingSequenceReader implements SequenceReader
 			translate();
 			}
 		int result = translatedBuf[bufPosition
-				- 1];// ** count on bufPosition being incremented by the read call above... yucky
+		                           - 1];// ** count on bufPosition being incremented by the read call above... yucky
 		if (result == -1)
 			{
 			throw new TranslationException("Symbol not in alphabet: " + buf[bufPosition - 1]);

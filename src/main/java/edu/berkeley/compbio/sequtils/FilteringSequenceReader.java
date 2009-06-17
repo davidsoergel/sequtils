@@ -34,6 +34,7 @@
 package edu.berkeley.compbio.sequtils;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 // PERF
 
@@ -168,9 +169,14 @@ public class FilteringSequenceReader implements SequenceReader
 	 *                 represented as new byte[]{'A','C','G','T'}.
 	 * @see #readTranslated()
 	 */
-	public void setTranslationAlphabet(byte[] alphabet)
+	public boolean setTranslationAlphabet(byte[] alphabet)
 		{
-		translationAlphabet = alphabet;
+		if (!Arrays.equals(this.translationAlphabet, alphabet))
+			{
+			this.translationAlphabet = alphabet;
+			return true;
+			}
+		return false;
 		}
 
 	private byte[] translationAlphabet;

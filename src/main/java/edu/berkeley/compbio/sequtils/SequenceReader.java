@@ -157,7 +157,7 @@ public interface SequenceReader
 	 *                 represented as new byte[]{'A','C','G','T'}.
 	 * @see #readTranslated()
 	 */
-	void setTranslationAlphabet(byte[] alphabet);
+	boolean setTranslationAlphabet(byte[] alphabet);
 
 
 	/**
