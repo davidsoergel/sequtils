@@ -166,7 +166,16 @@ public class SequenceFragmentMetadata implements Comparable, Serializable //, We
 			if (parentMetadata != null)
 				{
 				// this will never change so we may as well store it
-				sequenceName = parentMetadata.getSequenceName() + " (" + startPosition + ":" + length + ")";
+
+				// if this fragment includes the full length of the parent, don't mess with the name
+				if (startPosition == 0 && length == parentMetadata.getLength())
+					{
+					sequenceName = parentMetadata.getSequenceName();
+					}
+				else
+					{
+					sequenceName = parentMetadata.getSequenceName() + " (" + startPosition + ":" + length + ")";
+					}
 				}
 			else
 				{
