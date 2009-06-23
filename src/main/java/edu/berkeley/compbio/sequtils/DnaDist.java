@@ -81,7 +81,7 @@ public class DnaDist implements DissimilarityMeasure<byte[]>
 			denominator = (double) (match + mismatch + gapA + gapB);
 			}
 
-		if (Double.isNaN(denominator) || Double.isInfinite(denominator))
+		if (denominator == 0.0 || Double.isNaN(denominator) || Double.isInfinite(denominator))
 			{
 			return 1.0;
 			}
@@ -152,7 +152,7 @@ public class DnaDist implements DissimilarityMeasure<byte[]>
 
 		final double denominator = (double) (match + mismatch + gapBlocksA + gapBlocksB);
 
-		if (Double.isNaN(denominator) || Double.isInfinite(denominator))
+		if (denominator == 0.0 || Double.isNaN(denominator) || Double.isInfinite(denominator))
 			{
 			return 1.0;
 			}
