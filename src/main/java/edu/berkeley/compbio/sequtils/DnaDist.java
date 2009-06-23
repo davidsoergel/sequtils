@@ -74,7 +74,6 @@ public class DnaDist implements DissimilarityMeasure<byte[]>
 		if (gapmode == GapMode.NOGAPS)
 			{
 			denominator = (double) (match + mismatch);
-			return (double) match / denominator;
 			}
 		else // if (gapmode == GapMode.EACHGAP)
 			{
