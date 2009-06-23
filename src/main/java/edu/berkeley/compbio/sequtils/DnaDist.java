@@ -85,7 +85,9 @@ public class DnaDist implements DissimilarityMeasure<byte[]>
 			{
 			return 1.0;
 			}
-		return 1.0 - ((double) match / denominator);
+		double result = 1.0 - ((double) match / denominator);
+		assert !Double.isNaN(result);
+		return result;
 		}
 
 	private double distanceFromToOneGap(final byte[] a, final byte[] b)
@@ -156,6 +158,8 @@ public class DnaDist implements DissimilarityMeasure<byte[]>
 			{
 			return 1.0;
 			}
-		return 1.0 - ((double) match / denominator);
+		double result = 1.0 - ((double) match / denominator);
+		assert !Double.isNaN(result);
+		return result;
 		}
 	}
