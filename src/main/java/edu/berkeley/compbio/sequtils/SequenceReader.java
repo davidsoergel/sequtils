@@ -97,7 +97,7 @@ public interface SequenceReader
 	 *
 	 * @return The total amount of sequence
 	 */
-	int getTotalSequence();
+	long getTotalSequence();
 
 	/**
 	 * Returns the next nucleotide
@@ -146,7 +146,7 @@ public interface SequenceReader
 	 * @param section
 	 * @throws IOException
 	 */
-	void seek(SequenceFragmentMetadata section, int offset) throws IOException;
+	void seek(SequenceFragmentMetadata section, long offset) throws IOException;
 
 	/**
 	 * Set the character mapping to be used when reading nucleotides.

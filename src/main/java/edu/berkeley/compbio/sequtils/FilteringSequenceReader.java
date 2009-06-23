@@ -92,7 +92,7 @@ public class FilteringSequenceReader implements SequenceReader
 	/**
 	 * {@inheritDoc}
 	 */
-	public int getTotalSequence()
+	public long getTotalSequence()
 		{
 		return base.getTotalSequence();
 		}
@@ -155,7 +155,7 @@ public class FilteringSequenceReader implements SequenceReader
 	/**
 	 * {@inheritDoc}
 	 */
-	public void seek(SequenceFragmentMetadata section, int offset) throws IOException
+	public void seek(SequenceFragmentMetadata section, long offset) throws IOException
 		{
 		base.seek(section, offset);
 		}

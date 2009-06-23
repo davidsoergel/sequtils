@@ -12,6 +12,7 @@ public class SequenceArrayUtils
 	{
 	private static final Logger logger = Logger.getLogger(SequenceArrayUtils.class);
 	public static final char GAP_CHAR = '-';
+	public static final byte GAP_BYTE = (byte) '-';
 
 	//@Property(helpmessage = "Characters representing gaps", defaultvalue = ".- ")
 	public static final String gapChars = ".- ";
@@ -279,7 +280,7 @@ public class SequenceArrayUtils
 		// the requested non-gap index exceeds the number of available characters by a lot; invalid
 		logger.debug(
 				"Requested non-gap index exceeds number of available characters by more than one: " + idx + " " + count
-						+ " " + x.length);
+				+ " " + x.length);
 		throw new SequenceArrayException("Requested sequence index out of range");
 		}
 
@@ -303,6 +304,11 @@ public class SequenceArrayUtils
 	public static boolean isGap(char x)//, String gapChars)
 		{
 		return gapChars.indexOf(x) != -1;
+		}
+
+	public static boolean isGap(byte x)//, String gapChars)
+		{
+		return gapChars.indexOf((char) x) != -1;
 		}
 
 	public static int numGapClusters(char[] x)//, String gapChars)
@@ -439,6 +445,64 @@ public class SequenceArrayUtils
 			result = false;
 			}
 
+		return result;
+		}
+
+	public static byte[] copySlice(final byte[] x, final int pos, final int width)
+		{
+		byte[] result = new byte[width];
+		System.arraycopy(x, pos, result, 0, width);
+		return result;
+		}
+
+	/**
+	 * copy a slice starting at the given position of whatever width is needed to obtain the requested number of non-gap
+	 * characters
+	 *
+	 * @param x
+	 * @param pos
+	 * @param nonGapsDesired
+	 * @return
+	 */
+	public static byte[] copySliceNoGaps(final byte[] x, final int pos, final int nonGapsDesired)
+			throws NotEnoughSequenceException
+		{
+		int width = 0;
+		int nonGapsFound = 0;
+		int xRemainder = x.length - pos;
+		while (width < xRemainder)
+			{
+
+			if (!isGap(x[width]))
+				{
+				nonGapsFound++;
+				}
+
+			if (nonGapsFound == nonGapsDesired)
+				{
+				break;
+				}
+
+			width++;
+			}
+
+		if (nonGapsFound < nonGapsDesired)
+			{
+			throw new NotEnoughSequenceException("There are not enough non-gap characters after the given position");
+			}
+
+		return copySlice(x, pos, width - 1);
+		}
+
+	public static byte[] applyMask(boolean[] mask, byte[] x, byte maskByte)
+		{
+		final int len = x.length;
+		assert mask.length == len;
+		byte[] result = new byte[len];
+		for (int i = 0; i < len; i++)
+			{
+			result[i] = mask[i] ? x[i] : maskByte;
+			}
 		return result;
 		}
 	}

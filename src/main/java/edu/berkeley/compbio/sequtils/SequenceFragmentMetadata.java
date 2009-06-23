@@ -37,6 +37,8 @@ import com.davidsoergel.dsutils.collections.HashWeightedSet;
 import com.davidsoergel.dsutils.collections.WeightedSet;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
+
 /**
  * Provides a container for information about a particular sequence.  Sequence fragments are related hierarchically by
  * containment; a larger fragment containing this one is called its "parent".  For instance, a given FASTA file may
@@ -49,11 +51,11 @@ import org.jetbrains.annotations.NotNull;
  * @author David Soergel
  * @version $Id$
  */
-public class SequenceFragmentMetadata implements Comparable //, WeightedLabelCarrier
+public class SequenceFragmentMetadata implements Comparable, Serializable //, WeightedLabelCarrier
 	{
 	// ------------------------------ FIELDS ------------------------------
 
-	public static final int UNKNOWN_LENGTH = Integer.MAX_VALUE;
+	public static final long UNKNOWN_LENGTH = Long.MAX_VALUE;
 
 	// this is public so we can increment it directly (better performance?)  // no more
 
@@ -61,15 +63,16 @@ public class SequenceFragmentMetadata implements Comparable //, WeightedLabelCar
 	 * The total number of characters represented by this fragment, including "N" characters or whatever.  May have the
 	 * value UNKNOWN_LENGTH if the fragment has not yet been scanned.
 	 */
-	protected int length = 0;
+	protected long length = 0;
 
 	protected SequenceFragmentMetadata parentMetadata = null;
 
 	protected String sequenceName = null;
-	protected int startPosition = 0;
+	protected long startPosition = 0;
 	private Integer taxid;
 
-	private WeightedSet<String> weightedLabels = new HashWeightedSet<String>();
+	//** we're serializing for the sake of the FastaParser index, where labels shouldn't matter
+	private transient WeightedSet<String> weightedLabels = new HashWeightedSet<String>();
 
 	// --------------------------- CONSTRUCTORS ---------------------------
 
@@ -97,7 +100,7 @@ public class SequenceFragmentMetadata implements Comparable //, WeightedLabelCar
 	 * @param length        the length of this sequence
 	 */
 	public SequenceFragmentMetadata(SequenceFragmentMetadata parent, String sequenceName, Integer taxid,
-	                                int startPosition, int length)
+	                                long startPosition, long length)
 		{
 		this.parentMetadata = parent;
 		this.sequenceName = sequenceName;
@@ -113,7 +116,7 @@ public class SequenceFragmentMetadata implements Comparable //, WeightedLabelCar
 	 *
 	 * @return the length of this sequence
 	 */
-	public int getLength()
+	public long getLength()
 		{
 		return length;
 		}
@@ -189,12 +192,12 @@ public class SequenceFragmentMetadata implements Comparable //, WeightedLabelCar
 	 *
 	 * @return the start position of this sequence, a 0-based index with respect to the parent sequence.
 	 */
-	public int getStartPosition()
+	public long getStartPosition()
 		{
 		return startPosition;
 		}
 
-	public int getStartPositionFromRoot()
+	public long getStartPositionFromRoot()
 		{
 		if (parentMetadata != null)
 			{
@@ -208,7 +211,7 @@ public class SequenceFragmentMetadata implements Comparable //, WeightedLabelCar
 	 *
 	 * @param startPosition the start position of this sequence, a 0-based index with respect to the parent sequence.
 	 */
-	public void setStartPosition(int startPosition)
+	public void setStartPosition(long startPosition)
 		{
 		this.startPosition = startPosition;
 		}
@@ -322,8 +325,8 @@ public class SequenceFragmentMetadata implements Comparable //, WeightedLabelCar
 			}
 
 		// OK, both parents exist and are equal
-		int thisStart = getStartPositionFromRoot();
-		int otherStart = other.getStartPositionFromRoot();
+		long thisStart = getStartPositionFromRoot();
+		long otherStart = other.getStartPositionFromRoot();
 
 		if (thisStart > otherStart)
 			{
@@ -392,7 +395,8 @@ public class SequenceFragmentMetadata implements Comparable //, WeightedLabelCar
 		int result = getRootSequenceName().compareTo(osfm.getRootSequenceName());
 		if (result == 0)
 			{
-			result = getStartPositionFromRoot() - osfm.getStartPositionFromRoot();
+			long diff = getStartPositionFromRoot() - osfm.getStartPositionFromRoot();
+			result = diff < 0 ? -1 : diff > 0 ? 1 : 0;
 			}
 		return result;
 		}

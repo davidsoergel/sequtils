@@ -102,7 +102,7 @@ public class ByteArraySequenceReader extends TranslatingSequenceReader
 			 pos = position;
 			 }
 	 */
-	public int getTotalSequence()
+	public long getTotalSequence()
 		{
 		return buf.length;
 		}
@@ -158,8 +158,12 @@ public class ByteArraySequenceReader extends TranslatingSequenceReader
 	/**
 	 * {@inheritDoc}
 	 */
-	public void seek(SequenceFragmentMetadata section, int offset) throws IOException
+	public void seek(SequenceFragmentMetadata section, long offset) throws IOException
 		{
-		bufPosition = offset;
+		if (offset > Integer.MAX_VALUE)
+			{
+			throw new IOException("Arrays can't be bigger than Integer.MAX_VALUE");
+			}
+		bufPosition = (int) offset;
 		}
 	}
