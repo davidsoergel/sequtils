@@ -8,30 +8,19 @@ import com.davidsoergel.stats.DissimilarityMeasure;
  */
 public class DnaDist implements DissimilarityMeasure<byte[]>
 	{
-	//** cleaner to describe this as affine gaps?  bah too complicated for this purpose
+	private double gapOpenPenalty;
+	private double gapExtendsPenalty;
 
-	public enum GapMode
+
+	public DnaDist(final double gapOpenPenalty, final double gapExtendsPenalty)
 		{
-			NOGAPS, EACHGAP, ONEGAP, COUNTGAPS
-		}
-
-	public final GapMode gapmode;
-
-	//	private static final byte GAP_BYTE = SequenceArrayUtils.GAP_BYTE;  // is there some advantage to having this local?
-
-	public DnaDist(final GapMode gapmode)
-		{
-		this.gapmode = gapmode;
+		this.gapExtendsPenalty = gapExtendsPenalty;
+		this.gapOpenPenalty = gapOpenPenalty;
 		}
 
 	public double distanceFromTo(final byte[] a, final byte[] b)
 		{
 		assert a.length == b.length;
-
-		if (gapmode == GapMode.ONEGAP)
-			{
-			return distanceFromToOneGap(a, b); // separate this out for efficiency
-			}
 
 		final int len = a.length;
 
@@ -40,74 +29,6 @@ public class DnaDist implements DissimilarityMeasure<byte[]>
 		int gapA = 0;
 		int gapB = 0;
 
-		int gapBoth = 0;
-
-		for (int i = 0; i < len; i++)
-			{
-			if (SequenceArrayUtils.isGap(a[i]))// == GAP_BYTE)
-				{
-				if (SequenceArrayUtils.isGap(b[i]))
-					{
-					gapBoth++;
-					}
-				else
-					{
-					gapA++;
-					}
-				}
-			else if (SequenceArrayUtils.isGap(b[i]))
-				{
-				gapB++;
-				}
-			else if (a[i] == b[i])
-					{
-					match++;
-					}
-				else
-					{
-					mismatch++;
-					}
-			}
-
-		assert match + mismatch + gapA + gapB + gapBoth == len;
-		double numerator;
-		double denominator;
-		if (gapmode == GapMode.COUNTGAPS)
-			{
-			numerator = gapA + gapB;
-			denominator = (double) (match + mismatch + gapA + gapB);
-			}
-		else if (gapmode == GapMode.NOGAPS)
-			{
-			numerator = match;
-			denominator = (double) (match + mismatch);
-			}
-		else // if (gapmode == GapMode.EACHGAP)
-			{
-			numerator = match;
-			denominator = (double) (match + mismatch + gapA + gapB);
-			}
-
-		if (denominator == 0.0 || Double.isNaN(denominator) || Double.isInfinite(denominator))
-			{
-			return 1.0;
-			}
-		double result = 1.0 - ((double) numerator / denominator);
-
-		//BAD J-K correction
-
-		assert !Double.isNaN(result);
-		return result;
-		}
-
-	private double distanceFromToOneGap(final byte[] a, final byte[] b)
-		{
-		int len = a.length;
-
-		int match = 0;
-		int mismatch = 0;
-		int gapA = 0;
-		int gapB = 0;
 		int gapBlocksA = 0;
 		int gapBlocksB = 0;
 
@@ -160,16 +81,49 @@ public class DnaDist implements DissimilarityMeasure<byte[]>
 					}
 			}
 
+
 		assert match + mismatch + gapA + gapB + gapBoth == len;
 
-		final double denominator = (double) (match + mismatch + gapBlocksA + gapBlocksB);
 
-		if (denominator == 0.0 || Double.isNaN(denominator) || Double.isInfinite(denominator))
+		final int gapOpens = gapBlocksA + gapBlocksB;
+		final int totalAligned = match + mismatch;
+		final int totalGaps = gapA + gapB;
+		final int gapExtends = totalGaps - gapOpens;
+
+		// the "affine" model here, we just add mismatches to the alignment, extending both the numerator and the denominator
+		final double gapsAsMismatches = gapOpens * gapOpenPenalty + gapExtends * gapExtendsPenalty;
+
+		final double numerator = mismatch + gapsAsMismatches;
+		final double denominator = totalAligned + gapsAsMismatches;
+
+
+/*
+		else if (gapmode == GapMode.NOGAPS)
+			{
+			numerator = match;
+			denominator = (double) (match + mismatch);
+			}
+		else if (gapmode == GapMode.ONEGAP)
+				{
+				numerator = match;
+				denominator = (double) (match + mismatch + gapBlocksA + gapBlocksB);
+				}
+			else // if (gapmode == GapMode.EACHGAP)
+				{
+				numerator = match;
+				denominator = (double) (match + mismatch + gapA + gapB);
+				}
+				*/
+
+		final double mismatchFrequency = numerator / denominator;
+
+		final double jukesCantorDistance = 3. / 4. * Math.log(1 - (4. / 3.) * mismatchFrequency);
+
+		if (Double.isNaN(jukesCantorDistance) || Double.isInfinite(jukesCantorDistance))
 			{
 			return 1.0;
 			}
-		double result = 1.0 - ((double) match / denominator);
-		assert !Double.isNaN(result);
-		return result;
+
+		return jukesCantorDistance;
 		}
 	}
