@@ -93,6 +93,9 @@ public class DnaDist implements DissimilarityMeasure<byte[]>
 			return 1.0;
 			}
 		double result = 1.0 - ((double) numerator / denominator);
+
+		//BAD J-K correction
+
 		assert !Double.isNaN(result);
 		return result;
 		}
