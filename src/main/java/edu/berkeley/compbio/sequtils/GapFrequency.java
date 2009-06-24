@@ -56,6 +56,13 @@ public class GapFrequency implements DissimilarityMeasure<byte[]>
 		int totalAligned = match + mismatch;
 		int totalGaps = gapA + gapB;
 
-		return totalGaps / (double) (totalAligned + totalGaps);
+		double denominator = (totalAligned + totalGaps);
+
+		if (denominator == 0)
+			{
+			return 1.0;
+			}
+
+		return totalGaps / denominator;
 		}
 	}
