@@ -12,7 +12,7 @@ public class DnaDist implements DissimilarityMeasure<byte[]>
 
 	public enum GapMode
 		{
-			NOGAPS, EACHGAP, ONEGAP
+			NOGAPS, EACHGAP, ONEGAP, COUNTGAPS
 		}
 
 	public final GapMode gapmode;
@@ -70,13 +70,21 @@ public class DnaDist implements DissimilarityMeasure<byte[]>
 			}
 
 		assert match + mismatch + gapA + gapB + gapBoth == len;
+		double numerator;
 		double denominator;
-		if (gapmode == GapMode.NOGAPS)
+		if (gapmode == GapMode.COUNTGAPS)
 			{
+			numerator = gapA + gapB;
+			denominator = (double) (match + mismatch + gapA + gapB);
+			}
+		else if (gapmode == GapMode.NOGAPS)
+			{
+			numerator = match;
 			denominator = (double) (match + mismatch);
 			}
 		else // if (gapmode == GapMode.EACHGAP)
 			{
+			numerator = match;
 			denominator = (double) (match + mismatch + gapA + gapB);
 			}
 
@@ -84,7 +92,7 @@ public class DnaDist implements DissimilarityMeasure<byte[]>
 			{
 			return 1.0;
 			}
-		double result = 1.0 - ((double) match / denominator);
+		double result = 1.0 - ((double) numerator / denominator);
 		assert !Double.isNaN(result);
 		return result;
 		}
