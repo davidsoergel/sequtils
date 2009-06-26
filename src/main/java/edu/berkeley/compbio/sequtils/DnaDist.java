@@ -2,6 +2,9 @@ package edu.berkeley.compbio.sequtils;
 
 import com.davidsoergel.stats.DissimilarityMeasure;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author <a href="mailto:dev@davidsoergel.com">David Soergel</a>
  * @version $Id$
@@ -37,6 +40,8 @@ public class DnaDist implements DissimilarityMeasure<byte[]>
 
 		int gapBoth = 0;
 
+		Set<Byte> matches = new HashSet<Byte>();
+
 		for (int i = 0; i < len; i++)
 			{
 			if (SequenceArrayUtils.isGap(a[i]))
@@ -69,6 +74,7 @@ public class DnaDist implements DissimilarityMeasure<byte[]>
 				}
 			else if (a[i] == b[i])
 					{
+					matches.add(a[i]);
 					match++;
 					aWasGap = false;
 					bWasGap = false;
