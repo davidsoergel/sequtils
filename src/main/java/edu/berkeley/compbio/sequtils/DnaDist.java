@@ -90,30 +90,11 @@ public class DnaDist implements DissimilarityMeasure<byte[]>
 		final int totalGaps = gapA + gapB;
 		final int gapExtends = totalGaps - gapOpens;
 
-		// the "affine" model here, we just add mismatches to the alignment, extending both the numerator and the denominator
+		// in the "affine" model here, we just add the gaps to the alignment as weighted mismatches, extending both the numerator and the denominator
 		final double gapsAsMismatches = gapOpens * gapOpenPenalty + gapExtends * gapExtendsPenalty;
 
 		final double numerator = mismatch + gapsAsMismatches;
 		final double denominator = totalAligned + gapsAsMismatches;
-
-
-/*
-		else if (gapmode == GapMode.NOGAPS)
-			{
-			numerator = match;
-			denominator = (double) (match + mismatch);
-			}
-		else if (gapmode == GapMode.ONEGAP)
-				{
-				numerator = match;
-				denominator = (double) (match + mismatch + gapBlocksA + gapBlocksB);
-				}
-			else // if (gapmode == GapMode.EACHGAP)
-				{
-				numerator = match;
-				denominator = (double) (match + mismatch + gapA + gapB);
-				}
-				*/
 
 		final double mismatchFrequency = numerator / denominator;
 
@@ -121,7 +102,7 @@ public class DnaDist implements DissimilarityMeasure<byte[]>
 
 		if (Double.isNaN(jukesCantorDistance) || Double.isInfinite(jukesCantorDistance))
 			{
-			return 1.0;
+			return 10.0;
 			}
 
 		return jukesCantorDistance;
