@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class SequenceArrayUtils
 	{
 	private static final Logger logger = Logger.getLogger(SequenceArrayUtils.class);
-	public static final char GAP_CHAR = '-';
+	//public static final char GAP_CHAR = '-';
 	public static final byte GAP_BYTE = (byte) '-';
 
 	//@Property(helpmessage = "Characters representing gaps", defaultvalue = ".- ")
@@ -23,14 +23,15 @@ public class SequenceArrayUtils
 
 		}
 
-	public static void rotate(char array[], int from, int to) throws SequenceArrayException
+
+	public static void rotate(byte array[], int from, int to) throws SequenceArrayException
 		{
 		if (from == to)
 			{
 			return;
 			}
 		int j = 0;
-		char temp = array[from];
+		byte temp = array[from];
 
 
 		try
@@ -59,7 +60,7 @@ public class SequenceArrayUtils
 			}
 		}
 
-	private static ThreadLocal<char[]> temp_tl = new ThreadLocal<char[]>();// char[];
+	private static ThreadLocal<byte[]> temp_tl = new ThreadLocal<byte[]>();// char[];
 
 	/**
 	 * Rotates an array slice in place within the larger array.  Moves elements from the "from" end to the "to" end; so if
@@ -70,7 +71,7 @@ public class SequenceArrayUtils
 	 * @param to    the 0-based array index of the last column to move (inclusive)
 	 * @param size  the number of positions to rotate the slice.  Can be negative to indicate rotation to the right.
 	 */
-	public static void rotate(char array[], int from, int to, int size) throws SequenceArrayException
+	public static void rotate(byte array[], int from, int to, int size) throws SequenceArrayException
 		{
 		if (from == to || size == 0)
 			{
@@ -84,11 +85,11 @@ public class SequenceArrayUtils
 			from = tmp;
 			}
 		int j = 0;
-		char[] temp = temp_tl.get();
+		byte[] temp = temp_tl.get();
 		if (temp == null || temp.length < array.length)
 			{
 			logger.debug("Rotate: allocating new temp array of size " + array.length * 2);
-			temp = (new char[array.length * 2]);
+			temp = (new byte[array.length * 2]);
 			temp_tl.set(temp);
 			}
 		//logger.debug("Rotating: " + seq + " " + array[seq].length + " " + from + " " + to + " " + size);
@@ -222,7 +223,7 @@ public class SequenceArrayUtils
 			}
 		}
 
-	public static int columnToSeqIndex(char[] x, int col)//, String gapChars)
+	public static int columnToSeqIndex(byte[] x, int col)//, String gapChars)
 		{
 		int pos, count = -1;
 		for (pos = 0; pos <= col; pos++)
@@ -243,7 +244,7 @@ public class SequenceArrayUtils
 	 * @param x
 	 * @param idx
 	 */
-	public static int seqIndexToColumn(char[] x, int idx)//, String gapChars)
+	public static int seqIndexToColumn(byte[] x, int idx)//, String gapChars)
 		{
 		//if(idx == numChars(x)+1) { return x.length - 1; }
 
@@ -287,10 +288,10 @@ public class SequenceArrayUtils
 	//private static String gapChars;
 	//public static void setGapChars(String s) { gapChars = s; }
 
-	public static int numGaps(char[] x)//, String gapChars)
+	public static int numGaps(byte[] x)//, String gapChars)
 		{
 		int count = 0;
-		for (char c : x)
+		for (byte c : x)
 			{
 			//logger.debug("Testing column: " + col + " " + x[col] + " " + count);
 			if (gapChars.indexOf(c) != -1)
@@ -301,17 +302,19 @@ public class SequenceArrayUtils
 		return count;
 		}
 
+	/*
 	public static boolean isGap(char x)//, String gapChars)
 		{
 		return gapChars.indexOf(x) != -1;
 		}
+*/
 
 	public static boolean isGap(byte x)//, String gapChars)
 		{
 		return gapChars.indexOf((char) x) != -1;
 		}
 
-	public static int numGapClusters(char[] x)//, String gapChars)
+	public static int numGapClusters(byte[] x)//, String gapChars)
 		{
 		try
 			{
@@ -333,12 +336,12 @@ public class SequenceArrayUtils
 			}
 		}
 
-	public static int numChars(char[] x)//, String gapChars)
+	public static int numChars(byte[] x)//, String gapChars)
 		{
 		return x.length - numGaps(x);
 		}
 
-	public static int startPositionOfGapCluster(char[] x, int cluster)//, String gapChars)
+	public static int startPositionOfGapCluster(byte[] x, int cluster)//, String gapChars)
 			throws SequenceArrayException
 		{
 		int count = 0;
@@ -381,7 +384,7 @@ public class SequenceArrayUtils
 				}
 			}
 		}*/
-	public static void stripGaps(char[][] x)//, String gapChars)
+	public static void stripGaps(byte[][] x)//, String gapChars)
 		{
 		for (int i = 0; i < x.length; i++)
 			{
@@ -399,25 +402,25 @@ public class SequenceArrayUtils
 			}
 		}
 
-	public static void replaceGaps(char[] seq1)//, String gapChars)
+	public static void replaceGaps(byte[] seq1)//, String gapChars)
 		{
 		for (int i = 0; i < seq1.length; i++)
 			{
 			if (isGap(seq1[i]))
 				{
-				seq1[i] = GAP_CHAR;
+				seq1[i] = GAP_BYTE;
 				}
 			}
 		}
 
 
-	public static boolean isLeftJustified(char[] seq)
+	public static boolean isLeftJustified(byte[] seq)
 		{
-		char last = 'A';// not a gap
+		byte last = 'A';// not a gap
 		for (int i = 0; i < seq.length; i++)
 			{
-			char c = seq[i];
-			if (last == GAP_CHAR && c != GAP_CHAR)
+			byte c = seq[i];
+			if (last == GAP_BYTE && c != GAP_BYTE)
 				{
 				return false;
 				}
@@ -437,7 +440,7 @@ public class SequenceArrayUtils
 	 * @param pos2
 	 * @return true if the positions are aligned, false otherwise
 	 */
-	public static boolean isAligned(char[][] x, int seq1, int pos1, int seq2, int pos2)
+	public static boolean isAligned(byte[][] x, int seq1, int pos1, int seq2, int pos2)
 		{
 		boolean result = (seqIndexToColumn(x[seq1], pos1) == seqIndexToColumn(x[seq2], pos2));
 		if (isGap(x[seq1][pos1]) || isGap(x[seq2][pos2]))
