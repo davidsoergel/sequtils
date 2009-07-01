@@ -302,6 +302,20 @@ public class SequenceArrayUtils
 		return count;
 		}
 
+	public static int numNonGaps(byte[] x)//, String gapChars)
+		{
+		int count = 0;
+		for (byte c : x)
+			{
+			//logger.debug("Testing column: " + col + " " + x[col] + " " + count);
+			if (gapChars.indexOf(c) == -1)
+				{
+				count++;
+				}
+			}
+		return count;
+		}
+
 	/*
 	public static boolean isGap(char x)//, String gapChars)
 		{
