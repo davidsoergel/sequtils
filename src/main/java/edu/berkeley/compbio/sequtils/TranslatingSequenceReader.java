@@ -90,8 +90,8 @@ public abstract class TranslatingSequenceReader implements SequenceReader
 			{
 			translate();
 			}
-		int result = translatedBuf[bufPosition
-		                           - 1];// ** count on bufPosition being incremented by the read call above... yucky
+		// ** count on bufPosition being incremented by the read call above... yucky
+		int result = translatedBuf[bufPosition - 1];
 		if (result == -1)
 			{
 			throw new TranslationException("Symbol not in alphabet: " + buf[bufPosition - 1]);
