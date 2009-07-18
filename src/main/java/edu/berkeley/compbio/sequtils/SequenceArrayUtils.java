@@ -13,6 +13,7 @@ public class SequenceArrayUtils
 	private static final Logger logger = Logger.getLogger(SequenceArrayUtils.class);
 	//public static final char GAP_CHAR = '-';
 	public static final byte GAP_BYTE = (byte) '-';
+	public static final byte UNKNOWN_BYTE = (byte) 'N';
 
 	//@Property(helpmessage = "Characters representing gaps", defaultvalue = ".- ")
 	public static final String gapChars = ".- ";

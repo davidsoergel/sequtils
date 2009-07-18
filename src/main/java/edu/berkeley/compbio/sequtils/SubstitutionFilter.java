@@ -40,7 +40,7 @@ package edu.berkeley.compbio.sequtils;
  * @author David Soergel
  * @version $Id$
  */
-public abstract interface NucleotideFilter
+public abstract interface SubstitutionFilter
 	{
 	// -------------------------- OTHER METHODS --------------------------
 

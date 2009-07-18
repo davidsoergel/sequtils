@@ -49,7 +49,7 @@ public class FilteringSequenceReader implements SequenceReader
 
 	//private static final int DEFAULT_BUFFER_SIZE = 16384;
 	private SequenceReader base;
-	private NucleotideFilter filter;
+	private SubstitutionFilter filter;
 
 
 	// --------------------------- CONSTRUCTORS ---------------------------
@@ -58,7 +58,7 @@ public class FilteringSequenceReader implements SequenceReader
 	   this(base, filter, DEFAULT_BUFFER_SIZE);
 	   }*/
 
-	public FilteringSequenceReader(SequenceReader base, NucleotideFilter filter)
+	public FilteringSequenceReader(SequenceReader base, SubstitutionFilter filter)
 		{
 		this.base = base;
 		this.filter = filter;
