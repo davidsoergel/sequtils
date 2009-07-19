@@ -303,6 +303,20 @@ public class SequenceArrayUtils
 		return count;
 		}
 
+	public static int numGaps(char[] x)//, String gapChars)
+		{
+		int count = 0;
+		for (char c : x)
+			{
+			//logger.debug("Testing column: " + col + " " + x[col] + " " + count);
+			if (gapChars.indexOf(c) != -1)
+				{
+				count++;
+				}
+			}
+		return count;
+		}
+
 	public static int numNonGaps(byte[] x)//, String gapChars)
 		{
 		int count = 0;
@@ -355,6 +369,12 @@ public class SequenceArrayUtils
 		{
 		return x.length - numGaps(x);
 		}
+/*
+	public static int numChars(char[] x)//, String gapChars)
+		{
+		return x.length - numGaps(x);
+		}
+*/
 
 	public static int startPositionOfGapCluster(byte[] x, int cluster)//, String gapChars)
 			throws SequenceArrayException
