@@ -33,8 +33,7 @@
 
 package edu.berkeley.compbio.sequtils;
 
-import com.davidsoergel.dsutils.collections.HashWeightedSet;
-import com.davidsoergel.dsutils.collections.WeightedSet;
+import com.davidsoergel.dsutils.LabellableImpl;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
@@ -51,7 +50,8 @@ import java.io.Serializable;
  * @author David Soergel
  * @version $Id$
  */
-public class SequenceFragmentMetadata implements Comparable, Serializable //, WeightedLabelCarrier
+public class SequenceFragmentMetadata extends LabellableImpl<String>
+		implements Comparable, Serializable //, WeightedLabelCarrier
 	{
 	// ------------------------------ FIELDS ------------------------------
 
@@ -70,9 +70,6 @@ public class SequenceFragmentMetadata implements Comparable, Serializable //, We
 	protected String sequenceName = null;
 	protected long startPosition = 0;
 	private Integer taxid;
-
-	//** we're serializing for the sake of the FastaParser index, where labels shouldn't matter
-	private transient WeightedSet<String> weightedLabels = new HashWeightedSet<String>();
 
 	// --------------------------- CONSTRUCTORS ---------------------------
 
@@ -306,11 +303,6 @@ public class SequenceFragmentMetadata implements Comparable, Serializable //, We
 		 }
  */
 
-	@NotNull
-	public WeightedSet<String> getWeightedLabels()
-		{
-		return weightedLabels;
-		}
 
 	/**
 	 * Tells whether this fragment overlaps with another.
