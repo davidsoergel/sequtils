@@ -505,31 +505,77 @@ public class SequenceArrayUtils
 	public static byte[] copySliceNoGaps(final byte[] x, final int pos, final int nonGapsDesired)
 			throws NotEnoughSequenceException
 		{
-		int width = 0;
+		int trav = pos;
 		int nonGapsFound = 0;
-		int xRemainder = x.length - pos;
-		while (width < xRemainder)
+
+		while (trav < x.length)
 			{
 
-			if (!isGap(x[width]))
+			if (!isGap(x[trav]))
 				{
 				nonGapsFound++;
 				}
+
+			trav++;
 
 			if (nonGapsFound == nonGapsDesired)
 				{
 				break;
 				}
-
-			width++;
 			}
+
+		// now trav points to the first character that we don't want
+		// thus, we want the sequence starting at pos of length trav - pos
 
 		if (nonGapsFound < nonGapsDesired)
 			{
 			throw new NotEnoughSequenceException("There are not enough non-gap characters after the given position");
 			}
 
-		return copySlice(x, pos, width - 1);
+		return copySlice(x, pos, trav - pos);
+		}
+
+	/**
+	 * copy a slice ending at the given position (exclusive!) of whatever width is needed to obtain the requested number of
+	 * non-gap characters
+	 *
+	 * @param x
+	 * @param pos
+	 * @param nonGapsDesired
+	 * @return
+	 */
+	public static byte[] copySliceNoGapsReverse(final byte[] x, final int pos, final int nonGapsDesired)
+			throws NotEnoughSequenceException
+		{
+		int trav = pos - 1;
+		int nonGapsFound = 0;
+
+		while (trav >= 0)
+			{
+
+			if (!isGap(x[trav]))
+				{
+				nonGapsFound++;
+				}
+
+
+			if (nonGapsFound == nonGapsDesired)
+				{
+				break;
+				}
+
+			trav--;
+			}
+
+		// now trav points to the first character that we do want
+		// thus, we want the sequence starting at trav of length pos - trav
+
+		if (nonGapsFound < nonGapsDesired)
+			{
+			throw new NotEnoughSequenceException("There are not enough non-gap characters after the given position");
+			}
+
+		return copySlice(x, trav, pos - trav);
 		}
 
 	public static byte[] applyMask(boolean[] mask, byte[] x, byte maskByte)
