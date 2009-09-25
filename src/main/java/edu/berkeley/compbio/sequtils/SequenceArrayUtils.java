@@ -604,7 +604,7 @@ public class SequenceArrayUtils
 
 	public static boolean endsWithGaps(final byte[] aFrag, final int endWindow)
 		{
-		for (int i = 0; i < endWindow; i++)
+		for (int i = 1; i <= endWindow; i++)
 			{
 			if (!isGap(aFrag[aFrag.length - i]))
 				{

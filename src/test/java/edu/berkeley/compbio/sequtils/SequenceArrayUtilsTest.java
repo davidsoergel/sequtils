@@ -62,14 +62,14 @@ public class SequenceArrayUtilsTest
 	@Test
 	public void testPadEndWithGaps()
 		{
-		byte[] r = SequenceArrayUtils.padEndWithGaps(g, 4);
+		byte[] r = SequenceArrayUtils.padEndWithGaps(g, 21);
 		assert Arrays.equals(r, gf);
 		}
 
 	@Test
 	public void testPadStartWithGaps()
 		{
-		byte[] r = SequenceArrayUtils.padStartWithGaps(f, 4);
+		byte[] r = SequenceArrayUtils.padStartWithGaps(f, 21);
 		assert Arrays.equals(r, gf);
 		}
 	}
