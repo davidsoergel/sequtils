@@ -502,7 +502,7 @@ public class SequenceArrayUtils
 	 * @param nonGapsDesired
 	 * @return
 	 */
-	public static byte[] copySliceNoGaps(final byte[] x, final int pos, final int nonGapsDesired)
+	public static byte[] copySliceUpToNNonGaps(final byte[] x, final int pos, final int nonGapsDesired)
 			throws NotEnoughSequenceException
 		{
 		int trav = pos;
@@ -544,7 +544,7 @@ public class SequenceArrayUtils
 	 * @param nonGapsDesired
 	 * @return
 	 */
-	public static byte[] copySliceNoGapsReverse(final byte[] x, final int pos, final int nonGapsDesired)
+	public static byte[] copySliceUpToNNonGapsReverse(final byte[] x, final int pos, final int nonGapsDesired)
 			throws NotEnoughSequenceException
 		{
 		int trav = pos - 1;
@@ -587,6 +587,55 @@ public class SequenceArrayUtils
 			{
 			result[i] = mask[i] ? x[i] : maskByte;
 			}
+		return result;
+		}
+
+	public static boolean startsWithGaps(final byte[] aFrag, final int startWindow)
+		{
+		for (int i = 0; i < startWindow; i++)
+			{
+			if (!isGap(aFrag[i]))
+				{
+				return false;
+				}
+			}
+		return true;
+		}
+
+	public static boolean endsWithGaps(final byte[] aFrag, final int endWindow)
+		{
+		for (int i = 0; i < endWindow; i++)
+			{
+			if (!isGap(aFrag[aFrag.length - i]))
+				{
+				return false;
+				}
+			}
+		return true;
+		}
+
+	public static byte[] padEndWithGaps(final byte[] aFrag, final int desiredLength)
+		{
+		if (aFrag.length >= desiredLength)
+			{
+			return aFrag;
+			}
+		byte[] result = new byte[desiredLength];
+		System.arraycopy(aFrag, 0, result, 0, aFrag.length);
+		Arrays.fill(result, aFrag.length, desiredLength, GAP_BYTE);
+		return result;
+		}
+
+	public static byte[] padStartWithGaps(final byte[] aFrag, final int desiredLength)
+		{
+		if (aFrag.length >= desiredLength)
+			{
+			return aFrag;
+			}
+		byte[] result = new byte[desiredLength];
+		int startPos = desiredLength - aFrag.length;
+		System.arraycopy(aFrag, 0, result, startPos, aFrag.length);
+		Arrays.fill(result, 0, startPos, GAP_BYTE);
 		return result;
 		}
 	}

@@ -24,7 +24,7 @@ public class SequenceArrayUtilsTest
 	@Test
 	public void testCopySliceNoGaps() throws NotEnoughSequenceException
 		{
-		byte[] r = SequenceArrayUtils.copySliceNoGaps(bg, 3, 4);
+		byte[] r = SequenceArrayUtils.copySliceUpToNNonGaps(bg, 3, 4);
 
 		assert Arrays.equals(r, new byte[]{3, '-', 5, '-', '-', 8, 9});
 		}
@@ -32,8 +32,44 @@ public class SequenceArrayUtilsTest
 	@Test
 	public void testCopySliceNoGapsReverse() throws NotEnoughSequenceException
 		{
-		byte[] r = SequenceArrayUtils.copySliceNoGapsReverse(bg, 10, 4);
+		byte[] r = SequenceArrayUtils.copySliceUpToNNonGapsReverse(bg, 10, 4);
 
 		assert Arrays.equals(r, new byte[]{3, '-', 5, '-', '-', 8, 9});
+		}
+
+	byte[] g = new byte[]{'-', '-', '-', '-', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+	byte[] f = new byte[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, '-', '-', '-', '-'};
+	byte[] gf = new byte[]{'-', '-', '-', '-', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, '-', '-', '-', '-'};
+
+	@Test
+	public void testStartsWithGaps()
+		{
+		assert SequenceArrayUtils.startsWithGaps(g, 2);
+		assert SequenceArrayUtils.startsWithGaps(g, 4);
+		assert !SequenceArrayUtils.startsWithGaps(g, 5);
+		assert !SequenceArrayUtils.startsWithGaps(g, 7);
+		}
+
+	@Test
+	public void testEndsWithGaps()
+		{
+		assert SequenceArrayUtils.endsWithGaps(f, 2);
+		assert SequenceArrayUtils.endsWithGaps(f, 4);
+		assert !SequenceArrayUtils.endsWithGaps(f, 5);
+		assert !SequenceArrayUtils.endsWithGaps(f, 7);
+		}
+
+	@Test
+	public void testPadEndWithGaps()
+		{
+		byte[] r = SequenceArrayUtils.padEndWithGaps(g, 4);
+		assert Arrays.equals(r, gf);
+		}
+
+	@Test
+	public void testPadStartWithGaps()
+		{
+		byte[] r = SequenceArrayUtils.padStartWithGaps(f, 4);
+		assert Arrays.equals(r, gf);
 		}
 	}
