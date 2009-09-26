@@ -108,7 +108,7 @@ public class DnaDist implements DissimilarityMeasure<byte[]>
 
 		if (Double.isNaN(jukesCantorDistance) || Double.isInfinite(jukesCantorDistance))
 			{
-			return UNKNOWN_DISTANCE;
+			return Double.NaN; //UNKNOWN_DISTANCE;
 			//throw new NotEnoughSequenceException("No overlapping sequence; can't compute a distance");
 			}
 
