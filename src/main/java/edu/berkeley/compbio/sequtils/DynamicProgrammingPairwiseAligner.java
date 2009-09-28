@@ -13,9 +13,10 @@ public class DynamicProgrammingPairwiseAligner
 			VERT, HORIZ, DIAG, STOP
 		}
 
-	private final int match;
-	private final int mismatch;
-	private final int gap;
+	private final LogOddsSubstitutionMatrix matrix;
+//	private final int match;
+//	private final int mismatch;
+//	private final int gap;
 
 	public static enum TracebackBegin
 		{
@@ -46,7 +47,7 @@ public class DynamicProgrammingPairwiseAligner
 	private final TracebackBegin traceBegin;
 	private final TracebackEnd traceEnd;
 
-	public DynamicProgrammingPairwiseAligner(final int match, final int mismatch, final int gap,
+	/*public DynamicProgrammingPairwiseAligner(final int match, final int mismatch, final int gap,
 	                                         final TracebackBegin traceBegin, final TracebackEnd traceEnd)
 		{
 		this.gap = gap;
@@ -54,16 +55,26 @@ public class DynamicProgrammingPairwiseAligner
 		this.mismatch = mismatch;
 		this.traceBegin = traceBegin;
 		this.traceEnd = traceEnd;
+		}*/
+
+	public DynamicProgrammingPairwiseAligner(final LogOddsSubstitutionMatrix matrix, final TracebackBegin traceBegin,
+	                                         final TracebackEnd traceEnd)
+		{
+		this.matrix = matrix;
+		this.traceBegin = traceBegin;
+		this.traceEnd = traceEnd;
 		}
 
 	public static DynamicProgrammingPairwiseAligner getSmithWaterman()
 		{
-		return new DynamicProgrammingPairwiseAligner(1, -1, -2, TracebackBegin.INTERNAL, TracebackEnd.INTERNAL);
+		return new DynamicProgrammingPairwiseAligner(new SimpleSubstitutionMatrix(1, -1, -2), TracebackBegin.INTERNAL,
+		                                             TracebackEnd.INTERNAL);
 		}
 
 	public static DynamicProgrammingPairwiseAligner getNeedlemanWunsch()
 		{
-		return new DynamicProgrammingPairwiseAligner(1, -1, -2, TracebackBegin.CORNER, TracebackEnd.CORNER);
+		return new DynamicProgrammingPairwiseAligner(new SimpleSubstitutionMatrix(1, -1, -2), TracebackBegin.CORNER,
+		                                             TracebackEnd.CORNER);
 		}
 
 
@@ -154,10 +165,12 @@ public class DynamicProgrammingPairwiseAligner
 			{
 			for (int bIndex = 0; bIndex < seqB.length; bIndex++)
 				{
+				int localScore = matrix.score(seqA[aIndex], seqB[bIndex]);
+
 				// compute possible scores for each path
-				int horiz = dp[aIndex - 1][bIndex] + gap;
-				int vert = dp[aIndex][bIndex - 1] + gap;
-				int diag = dp[aIndex - 1][bIndex - 1] + (seqA[aIndex] == seqB[bIndex] ? match : mismatch);
+				int horiz = dp[aIndex - 1][bIndex] + localScore;
+				int vert = dp[aIndex][bIndex - 1] + localScore;
+				int diag = dp[aIndex - 1][bIndex - 1] + localScore;
 
 				// choose the maximum, storing the traceback info
 
