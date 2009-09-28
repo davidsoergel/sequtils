@@ -104,7 +104,7 @@ public class DnaDist implements DissimilarityMeasure<byte[]>
 
 		final double mismatchFrequency = numerator / denominator;
 
-		final double jukesCantorDistance = -3. / 4. * Math.log(1 - (4. / 3.) * mismatchFrequency);
+		final double jukesCantorDistance = -3. / 4. * Math.log(1. - (4. / 3.) * mismatchFrequency);
 
 		if (Double.isNaN(jukesCantorDistance) || Double.isInfinite(jukesCantorDistance))
 			{
