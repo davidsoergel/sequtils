@@ -340,7 +340,8 @@ public class SequenceArrayUtils
 
 	public static boolean isGap(byte x)//, String gapChars)
 		{
-		return gapChars.indexOf((char) x) != -1;
+		return x == '-' || x == '.' || x == ' ';
+		//	return gapChars.indexOf((char) x) != -1;
 		}
 
 	public static int numGapClusters(byte[] x)//, String gapChars)
