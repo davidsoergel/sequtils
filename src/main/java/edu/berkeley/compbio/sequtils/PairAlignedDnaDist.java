@@ -24,6 +24,11 @@ public class PairAlignedDnaDist implements DissimilarityMeasure<byte[]>
 		byte[] aGapFree = SequenceArrayUtils.copyNoGaps(a);
 		byte[] bGapFree = SequenceArrayUtils.copyNoGaps(b);
 
+		if (aGapFree.length == 0 || bGapFree.length == 0)
+			{
+			return Double.NaN;
+			}
+
 		// align them
 
 		OrderedPair<byte[], byte[]> aligned = aligner.align(aGapFree, bGapFree);
