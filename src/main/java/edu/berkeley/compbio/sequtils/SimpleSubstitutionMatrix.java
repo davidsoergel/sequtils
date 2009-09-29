@@ -4,22 +4,23 @@ package edu.berkeley.compbio.sequtils;
  * @author <a href="mailto:dev@davidsoergel.com">David Soergel</a>
  * @version $Id$
  */
-public class SimpleSubstitutionMatrix extends LogOddsSubstitutionMatrix
+public class SimpleSubstitutionMatrix implements AffineSubstitutionMatrix
 	{
-	private final int match;
-	private final int mismatch;
-	private final int gap;
+	private final float match;
+	private final float mismatch;
+	private final float gapOpen;
+	private final float gapExtend;
 
 
-	public SimpleSubstitutionMatrix(final int match, final int mismatch, final int gap)
+	public SimpleSubstitutionMatrix(final float match, final float mismatch, final float gapOpen, final float gapExtend)
 		{
-		this.gap = gap;
+		this.gapOpen = gapOpen;
+		this.gapExtend = gapExtend;
 		this.match = match;
 		this.mismatch = mismatch;
 		}
 
-	@Override
-	public int score(final byte c, final byte d)
+	public float score(final byte c, final byte d, boolean gapIsOpen)
 		{
 		final boolean gc = SequenceArrayUtils.isGap(c);
 		final boolean gd = SequenceArrayUtils.isGap(d);
@@ -29,7 +30,7 @@ public class SimpleSubstitutionMatrix extends LogOddsSubstitutionMatrix
 			}
 		if (gc || gd)
 			{
-			return gap;
+			return gapIsOpen ? gapExtend : gapOpen;
 			}
 		if (c == d)
 			{

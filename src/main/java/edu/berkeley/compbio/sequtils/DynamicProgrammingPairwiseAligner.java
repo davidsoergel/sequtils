@@ -10,10 +10,15 @@ public class DynamicProgrammingPairwiseAligner
 	{
 	private static enum TracebackDirection
 		{
-			VERT, HORIZ, DIAG, STOP
+			VERT, HORIZ, DIAG, STOP;
+
+		private static boolean isGap(TracebackDirection z)
+			{
+			return z == VERT || z == HORIZ;
+			}
 		}
 
-	private final LogOddsSubstitutionMatrix matrix;
+	private final AffineSubstitutionMatrix matrix;
 //	private final int match;
 //	private final int mismatch;
 //	private final int gap;
@@ -23,6 +28,7 @@ public class DynamicProgrammingPairwiseAligner
 			CORNER, // global
 			RIGHT, // semi-global, include end of seqA
 			BOTTOM, // semi-global, include end of seqB
+			BOTTOMORRIGHT, // semi-global, include end of at least one sequence
 			INTERNAL // local
 		}
 
@@ -31,6 +37,7 @@ public class DynamicProgrammingPairwiseAligner
 			CORNER, // global
 			LEFT, // semi-global, include beginning of seqA
 			TOP, // semi-global, include beginning of seqB
+			TOPORLEFT, // semi-global, include beginning of at least one sequence
 			INTERNAL // local
 		}
 
@@ -57,7 +64,7 @@ public class DynamicProgrammingPairwiseAligner
 		this.traceEnd = traceEnd;
 		}*/
 
-	public DynamicProgrammingPairwiseAligner(final LogOddsSubstitutionMatrix matrix, final TracebackBegin traceBegin,
+	public DynamicProgrammingPairwiseAligner(final AffineSubstitutionMatrix matrix, final TracebackBegin traceBegin,
 	                                         final TracebackEnd traceEnd)
 		{
 		this.matrix = matrix;
@@ -67,14 +74,17 @@ public class DynamicProgrammingPairwiseAligner
 
 	public static DynamicProgrammingPairwiseAligner getSmithWaterman()
 		{
-		return new DynamicProgrammingPairwiseAligner(new SimpleSubstitutionMatrix(1, -1, -2), TracebackBegin.INTERNAL,
-		                                             TracebackEnd.INTERNAL);
+		return new DynamicProgrammingPairwiseAligner(new SimpleSubstitutionMatrix(5, -4, -10, .5f),
+		                                             TracebackBegin.INTERNAL, TracebackEnd.INTERNAL);
 		}
 
 	public static DynamicProgrammingPairwiseAligner getNeedlemanWunsch()
 		{
-		return new DynamicProgrammingPairwiseAligner(new SimpleSubstitutionMatrix(1, -1, -2), TracebackBegin.CORNER,
-		                                             TracebackEnd.CORNER);
+		// these are the default parameters from NCBI and EMBOSS
+		// see http://emboss.sourceforge.net/apps/cvs/emboss/apps/needle.html
+		// and ftp://ftp.ncbi.nih.gov/blast/matrices/NUC.4.2 and 4.4
+		return new DynamicProgrammingPairwiseAligner(new SimpleSubstitutionMatrix(5, -4, -10, .5f),
+		                                             TracebackBegin.CORNER, TracebackEnd.CORNER);
 		}
 
 
@@ -102,7 +112,7 @@ public class DynamicProgrammingPairwiseAligner
 		{
 		// assume that the input sequences are already gap-free
 
-		int[][] dp = new int[seqA.length][seqB.length];
+		float[][] dp = new float[seqA.length][seqB.length];
 		TracebackDirection[][] trace = new TracebackDirection[seqA.length][seqB.length];
 
 		// initialize the top left corner
@@ -113,7 +123,7 @@ public class DynamicProgrammingPairwiseAligner
 
 		// initialize the top edge
 
-		if (traceEnd == TracebackEnd.INTERNAL || traceEnd == TracebackEnd.TOP)
+		if (traceEnd == TracebackEnd.INTERNAL || traceEnd == TracebackEnd.TOP || traceEnd == TracebackEnd.TOPORLEFT)
 			{
 			// leading gaps in B, represented by a path along the top edge, are not penalized
 			for (int aIndex = 1; aIndex < seqA.length; aIndex++)
@@ -136,7 +146,7 @@ public class DynamicProgrammingPairwiseAligner
 
 		// initialize the left edge
 
-		if (traceEnd == TracebackEnd.INTERNAL || traceEnd == TracebackEnd.LEFT)
+		if (traceEnd == TracebackEnd.INTERNAL || traceEnd == TracebackEnd.LEFT || traceEnd == TracebackEnd.TOPORLEFT)
 			{
 			// leading gaps in A, represented by a path along the left edge, are not penalized
 			for (int bIndex = 1; bIndex < seqA.length; bIndex++)
@@ -165,12 +175,15 @@ public class DynamicProgrammingPairwiseAligner
 			{
 			for (int bIndex = 0; bIndex < seqB.length; bIndex++)
 				{
-				int localScore = matrix.score(seqA[aIndex], seqB[bIndex]);
 
-				// compute possible scores for each path
-				int horiz = dp[aIndex - 1][bIndex] + localScore;
-				int vert = dp[aIndex][bIndex - 1] + localScore;
-				int diag = dp[aIndex - 1][bIndex - 1] + localScore;
+				// compute possible scores for each path.  Note how we check whether the previes state was a gap, for the sake of affine penalties
+				float horiz = dp[aIndex - 1][bIndex] + matrix
+						.score(seqA[aIndex], seqB[bIndex], TracebackDirection.isGap(trace[aIndex - 1][bIndex]));
+
+				float vert = dp[aIndex][bIndex - 1] + matrix
+						.score(seqA[aIndex], seqB[bIndex], TracebackDirection.isGap(trace[aIndex][bIndex - 1]));
+
+				float diag = dp[aIndex - 1][bIndex - 1] + matrix.score(seqA[aIndex], seqB[bIndex], false);
 
 				// choose the maximum, storing the traceback info
 
@@ -211,30 +224,34 @@ public class DynamicProgrammingPairwiseAligner
 			case BOTTOM:
 				// scan the bottom edge for the best score
 				bTrace = seqB.length - 1;
-
-				int bestBottomScore = 0;
-				for (int aIndex = 0; aIndex < seqA.length; aIndex++)
-					{
-					if (dp[aIndex][bTrace] > bestBottomScore)
-						{
-						bestBottomScore = dp[aIndex][bTrace];
-						aTrace = aIndex;
-						}
-					}
+				aTrace = scanBottom(dp);
 				break;
 			case RIGHT:
 				// scan the right edge for the best score
 				aTrace = seqA.length - 1;
+				bTrace = scanRight(dp);
+				break;
+			case BOTTOMORRIGHT:
+				// scan the bottom and right edges for the best score
 
-				int bestRightScore = 0;
-				for (int bIndex = 0; bIndex < seqB.length; bIndex++)
+				aTrace = seqA.length - 1;
+				bTrace = seqB.length - 1;
+
+				int bestAIndex = scanBottom(dp);
+				int bestBIndex = scanRight(dp);
+
+				float bestBottomScore = dp[bestAIndex][bTrace];
+				float bestRightScore = dp[aTrace][bestBIndex];
+
+				if (bestBottomScore > bestRightScore)
 					{
-					if (dp[aTrace][bIndex] > bestRightScore)
-						{
-						bestRightScore = dp[aTrace][bIndex];
-						bTrace = bIndex;
-						}
+					aTrace = bestAIndex;
 					}
+				else
+					{
+					bTrace = bestBIndex;
+					}
+
 				break;
 			case INTERNAL:
 				// scan the entire array for the best score.
@@ -242,7 +259,7 @@ public class DynamicProgrammingPairwiseAligner
 
 				bTrace = seqB.length - 1;
 
-				int bestScore = 0;
+				float bestScore = 0;
 				for (int aIndex = 0; aIndex < seqA.length; aIndex++)
 					{
 					for (int bIndex = 0; bIndex < seqB.length; bIndex++)
@@ -310,5 +327,43 @@ public class DynamicProgrammingPairwiseAligner
 		alignedB = SequenceArrayUtils.copySlice(alignedB, startPos, alignmentWidth);
 
 		return new OrderedPair<byte[], byte[]>(alignedA, alignedB);
+		}
+
+	private int scanBottom(final float[][] dp)
+		{
+		int bestAIndex = -1;
+		float bestBottomScore = 0;
+		int cols = dp.length;
+		int rows = dp[0].length;
+		int lastRow = rows - 1;
+
+		for (int aIndex = 0; aIndex < cols; aIndex++)
+			{
+			if (dp[aIndex][lastRow] > bestBottomScore)
+				{
+				bestBottomScore = dp[aIndex][lastRow];
+				bestAIndex = aIndex;
+				}
+			}
+		return bestAIndex;
+		}
+
+	private int scanRight(final float[][] dp)
+		{
+		int bestBIndex = -1;
+		float bestRightScore = 0;
+		int cols = dp.length;
+		int rows = dp[0].length;
+		int lastCol = cols - 1;
+
+		for (int bIndex = 0; bIndex < rows; bIndex++)
+			{
+			if (dp[lastCol][bIndex] > bestRightScore)
+				{
+				bestRightScore = dp[lastCol][bIndex];
+				bestBIndex = bIndex;
+				}
+			}
+		return bestBIndex;
 		}
 	}

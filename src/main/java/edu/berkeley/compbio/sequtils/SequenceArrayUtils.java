@@ -423,18 +423,43 @@ public class SequenceArrayUtils
 		{
 		for (int i = 0; i < x.length; i++)
 			{
-			for (int j = 0; j < x[i].length; j++)
-				{
-				int maxPossibleGaps = x[i].length - j;
-				while (gapChars.indexOf(x[i][j]) != -1 && maxPossibleGaps > 0)
-					{
-					//logger.debug("Removing gap at " + i + ", " + j);
-					rotate(x[i], j, x[i].length - 1);
+			stripGaps(x[i]);
+			}
+		}
 
-					maxPossibleGaps--;
-					}
+	/**
+	 * Push all the gaps to the end of the array, in place
+	 *
+	 * @param x
+	 */
+	public static void stripGaps(byte[] x)//, String gapChars)
+		{
+		for (int j = 0; j < x.length; j++)
+			{
+			int maxPossibleGaps = x.length - j;
+			while (gapChars.indexOf(x[j]) != -1 && maxPossibleGaps > 0)
+				{
+				//logger.debug("Removing gap at " + i + ", " + j);
+				rotate(x, j, x.length - 1);
+
+				maxPossibleGaps--;
 				}
 			}
+		}
+
+	public static byte[] copyNoGaps(byte[] x)
+		{
+		byte[] result = new byte[x.length];
+		int i = 0;
+		for (int j = 0; j < x.length; j++)
+			{
+			if (!isGap(x[j]))
+				{
+				result[i] = x[j];
+				i++;
+				}
+			}
+		return copySlice(result, 0, i);
 		}
 
 	public static void replaceGaps(byte[] seq1)//, String gapChars)

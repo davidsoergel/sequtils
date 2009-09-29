@@ -22,7 +22,7 @@ public class SequenceArrayUtilsTest
 		}
 
 	@Test
-	public void testCopySliceNoGaps() throws NotEnoughSequenceException
+	public void testCopySliceUpToNNonGaps() throws NotEnoughSequenceException
 		{
 		byte[] r = SequenceArrayUtils.copySliceUpToNNonGaps(bg, 3, 4);
 
@@ -30,11 +30,23 @@ public class SequenceArrayUtilsTest
 		}
 
 	@Test
-	public void testCopySliceNoGapsReverse() throws NotEnoughSequenceException
+	public void testCopySliceUpToNNonGapsReverse() throws NotEnoughSequenceException
 		{
 		byte[] r = SequenceArrayUtils.copySliceUpToNNonGapsReverse(bg, 10, 4);
 
 		assert Arrays.equals(r, new byte[]{3, '-', 5, '-', '-', 8, 9});
+		}
+
+	@Test
+	public void testCopyNoGaps() throws NotEnoughSequenceException
+		{
+		byte[] r = SequenceArrayUtils.copyNoGaps(bg);
+
+		assert Arrays.equals(r, new byte[]{0, 1, 2, 3, 5, 8, 9, 10, 11, 12});
+
+		r = SequenceArrayUtils.copyNoGaps(gf);
+
+		assert Arrays.equals(r, b);
 		}
 
 	byte[] g = new byte[]{'-', '-', '-', '-', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
