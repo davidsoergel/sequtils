@@ -171,9 +171,9 @@ public class DynamicProgrammingPairwiseAligner
 
 		// Don't bother keeping track of the best score; we'll just scan for it later, depending on the alignment type
 
-		for (int aIndex = 0; aIndex < seqA.length; aIndex++)
+		for (int aIndex = 1; aIndex < seqA.length; aIndex++)
 			{
-			for (int bIndex = 0; bIndex < seqB.length; bIndex++)
+			for (int bIndex = 1; bIndex < seqB.length; bIndex++)
 				{
 
 				// compute possible scores for each path.  Note how we check whether the previes state was a gap, for the sake of affine penalties
@@ -212,7 +212,7 @@ public class DynamicProgrammingPairwiseAligner
 
 		// Decide where to start the traceback
 
-		int aTrace = -1;  // induce IndexArrayOutOfBoundsException if this doesn't get set (should be impossible)
+		int aTrace = -1;  // induce ArrayIndexOutOfBoundsException if this doesn't get set (should be impossible)
 		int bTrace = -1;
 
 		switch (traceBegin)
