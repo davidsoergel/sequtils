@@ -149,7 +149,7 @@ public class DynamicProgrammingPairwiseAligner
 		if (traceEnd == TracebackEnd.INTERNAL || traceEnd == TracebackEnd.LEFT || traceEnd == TracebackEnd.TOPORLEFT)
 			{
 			// leading gaps in A, represented by a path along the left edge, are not penalized
-			for (int bIndex = 1; bIndex < seqA.length; bIndex++)
+			for (int bIndex = 1; bIndex < seqB.length; bIndex++)
 				{
 				dp[0][bIndex] = 0;
 				trace[0][bIndex] = TracebackDirection.STOP;
@@ -158,7 +158,7 @@ public class DynamicProgrammingPairwiseAligner
 		else
 			{
 			int x = 1;
-			for (int bIndex = 1; bIndex < seqA.length; bIndex++)
+			for (int bIndex = 1; bIndex < seqB.length; bIndex++)
 				{
 				dp[0][bIndex] = x;
 				trace[0][bIndex] = TracebackDirection.VERT;
