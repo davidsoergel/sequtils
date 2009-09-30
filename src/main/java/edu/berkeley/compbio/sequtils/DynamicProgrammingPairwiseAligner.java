@@ -285,7 +285,7 @@ public class DynamicProgrammingPairwiseAligner
 
 				bTrace = seqV.length - 1;
 
-				float bestScore = 0;
+				float bestScore = Float.MIN_VALUE;
 				for (int hIndex = 0; hIndex < seqH.length; hIndex++)
 					{
 					for (int vIndex = 0; vIndex < seqV.length; vIndex++)
@@ -362,7 +362,7 @@ public class DynamicProgrammingPairwiseAligner
 	private int scanBottom(final float[][] dp)
 		{
 		int besthIndex = -1;
-		float bestBottomScore = 0;
+		float bestBottomScore = Float.MIN_VALUE;
 		int cols = dp.length;
 		int rows = dp[0].length;
 		int lastRow = rows - 1;
@@ -381,7 +381,7 @@ public class DynamicProgrammingPairwiseAligner
 	private int scanRight(final float[][] dp)
 		{
 		int bestvIndex = -1;
-		float bestRightScore = 0;
+		float bestRightScore = Float.MIN_VALUE;
 		int cols = dp.length;
 		int rows = dp[0].length;
 		int lastCol = cols - 1;
