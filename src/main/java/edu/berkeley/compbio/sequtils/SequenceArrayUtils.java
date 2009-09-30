@@ -616,10 +616,15 @@ public class SequenceArrayUtils
 		return result;
 		}
 
-	public static boolean startsWithGaps(final byte[] aFrag, final int startWindow)
+	public static boolean startsWithGaps(final byte[] aFrag, final int numStartGaps)
 		{
-		for (int i = 0; i < startWindow; i++)
+		for (int i = 0; i < numStartGaps; i++)
 			{
+			// if the fragment is shorter than the window but contains only gaps, return true
+			if (i >= aFrag.length)
+				{
+				return true;
+				}
 			if (!isGap(aFrag[i]))
 				{
 				return false;
@@ -628,10 +633,15 @@ public class SequenceArrayUtils
 		return true;
 		}
 
-	public static boolean endsWithGaps(final byte[] aFrag, final int endWindow)
+	public static boolean endsWithGaps(final byte[] aFrag, final int numEndGaps)
 		{
-		for (int i = 1; i <= endWindow; i++)
+		for (int i = 1; i <= numEndGaps; i++)
 			{
+			// if the fragment is shorter than the window but contains only gaps, return true
+			if (i <= 0)
+				{
+				return true;
+				}
 			if (!isGap(aFrag[aFrag.length - i]))
 				{
 				return false;
