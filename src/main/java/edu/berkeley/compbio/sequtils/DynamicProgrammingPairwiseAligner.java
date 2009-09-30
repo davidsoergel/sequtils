@@ -285,7 +285,7 @@ public class DynamicProgrammingPairwiseAligner
 
 				bTrace = seqV.length - 1;
 
-				float bestScore = Float.MIN_VALUE;
+				float bestScore = -Float.MAX_VALUE;
 				for (int hIndex = 0; hIndex < seqH.length; hIndex++)
 					{
 					for (int vIndex = 0; vIndex < seqV.length; vIndex++)
@@ -362,17 +362,17 @@ public class DynamicProgrammingPairwiseAligner
 	private int scanBottom(final float[][] dp)
 		{
 		int besthIndex = -1;
-		float bestBottomScore = Float.MIN_VALUE;
+		float bestBottomScore = -Float.MAX_VALUE;
 		int cols = dp.length;
 		int rows = dp[0].length;
 		int lastRow = rows - 1;
 
-		for (int hIndex = 0; hIndex < cols; hIndex++)
+		for (int dpHIndex = 0; dpHIndex < cols; dpHIndex++)
 			{
-			if (dp[hIndex][lastRow] > bestBottomScore)
+			if (dp[dpHIndex][lastRow] > bestBottomScore)
 				{
-				bestBottomScore = dp[hIndex][lastRow];
-				besthIndex = hIndex;
+				bestBottomScore = dp[dpHIndex][lastRow];
+				besthIndex = dpHIndex;
 				}
 			}
 		return besthIndex;
@@ -381,17 +381,17 @@ public class DynamicProgrammingPairwiseAligner
 	private int scanRight(final float[][] dp)
 		{
 		int bestvIndex = -1;
-		float bestRightScore = Float.MIN_VALUE;
+		float bestRightScore = -Float.MAX_VALUE;
 		int cols = dp.length;
 		int rows = dp[0].length;
 		int lastCol = cols - 1;
 
-		for (int vIndex = 0; vIndex < rows; vIndex++)
+		for (int dpVIndex = 0; dpVIndex < rows; dpVIndex++)
 			{
-			if (dp[lastCol][vIndex] > bestRightScore)
+			if (dp[lastCol][dpVIndex] > bestRightScore)
 				{
-				bestRightScore = dp[lastCol][vIndex];
-				bestvIndex = vIndex;
+				bestRightScore = dp[lastCol][dpVIndex];
+				bestvIndex = dpVIndex;
 				}
 			}
 		return bestvIndex;
