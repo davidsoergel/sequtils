@@ -20,13 +20,24 @@ public class PairAlignedDnaDist implements DissimilarityMeasure<byte[]>
 
 	public double distanceFromTo(final byte[] a, final byte[] b)
 		{
+		OrderedPair<byte[], byte[]> realigned = realign(new OrderedPair<byte[], byte[]>(a, b), aligner);
+		if (realigned == null)
+			{
+			return Double.NaN;
+			}
+		return dnaDist.distanceFromTo(realigned.getKey1(), realigned.getKey2());
+		}
+
+	public static OrderedPair<byte[], byte[]> realign(OrderedPair<byte[], byte[]> pair,
+	                                                  final DynamicProgrammingPairwiseAligner aligner)
+		{
 		// make gap-free copies
-		byte[] aGapFree = SequenceArrayUtils.copyNoGaps(a);
-		byte[] bGapFree = SequenceArrayUtils.copyNoGaps(b);
+		byte[] aGapFree = SequenceArrayUtils.copyNoGaps(pair.getKey1());
+		byte[] bGapFree = SequenceArrayUtils.copyNoGaps(pair.getKey2());
 
 		if (aGapFree.length == 0 || bGapFree.length == 0)
 			{
-			return Double.NaN;
+			return null; //Double.NaN;
 			}
 
 		// align them
@@ -35,7 +46,6 @@ public class PairAlignedDnaDist implements DissimilarityMeasure<byte[]>
 
 		byte[] realignedA = aligned.getKey1();
 		byte[] realignedB = aligned.getKey2();
-
-		return dnaDist.distanceFromTo(realignedA, realignedB);
+		return new OrderedPair<byte[], byte[]>(realignedA, realignedB);
 		}
 	}
