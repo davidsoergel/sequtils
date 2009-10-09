@@ -7,7 +7,6 @@ import java.util.Arrays;
 /**
  * @version 1.0
  */
-//@PropertyConsumer
 public class SequenceArrayUtils
 	{
 	private static final Logger logger = Logger.getLogger(SequenceArrayUtils.class);
@@ -15,7 +14,6 @@ public class SequenceArrayUtils
 	public static final byte GAP_BYTE = (byte) '-';
 	public static final byte UNKNOWN_BYTE = (byte) 'N';
 
-	//@Property(helpmessage = "Characters representing gaps", defaultvalue = ".- ")
 	public static final String gapChars = ".- ";
 
 
@@ -23,7 +21,6 @@ public class SequenceArrayUtils
 		{
 
 		}
-
 
 	public static void rotate(byte array[], int from, int to) throws SequenceArrayException
 		{
