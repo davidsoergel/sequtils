@@ -50,8 +50,8 @@ import java.io.Serializable;
  * @author David Soergel
  * @version $Id$
  */
-public class SequenceFragmentMetadata extends LabellableImpl<String>
-		implements Comparable, Serializable //, WeightedLabelCarrier
+public class SequenceFragmentMetadata<C extends SequenceFragmentMetadata> extends LabellableImpl<String>
+		implements Comparable<C>, Serializable //, WeightedLabelCarrier
 	{
 	// ------------------------------ FIELDS ------------------------------
 
@@ -390,7 +390,7 @@ public class SequenceFragmentMetadata extends LabellableImpl<String>
 	 *         specified object.
 	 * @throws ClassCastException if the specified object's type prevents it from being compared to this object.
 	 */
-	public int compareTo(Object o)
+	public int compareTo(C o)
 		{
 		SequenceFragmentMetadata osfm = ((SequenceFragmentMetadata) o);
 		int result = getRootSequenceName().compareTo(osfm.getRootSequenceName());
