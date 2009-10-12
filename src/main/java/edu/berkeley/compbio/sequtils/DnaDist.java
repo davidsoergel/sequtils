@@ -10,12 +10,14 @@ public class DnaDist implements DissimilarityMeasure<byte[]>
 	{
 	private double gapOpenPenalty;
 	private double gapExtendsPenalty;
+	private int minAlignedColumns;
 
 
-	public DnaDist(final double gapOpenPenalty, final double gapExtendsPenalty)
+	public DnaDist(final double gapOpenPenalty, final double gapExtendsPenalty, int minAlignedColumns)
 		{
 		this.gapExtendsPenalty = gapExtendsPenalty;
 		this.gapOpenPenalty = gapOpenPenalty;
+		this.minAlignedColumns = minAlignedColumns;
 		}
 
 	public double distanceFromTo(final byte[] a, final byte[] b)
@@ -92,6 +94,13 @@ public class DnaDist implements DissimilarityMeasure<byte[]>
 		final int totalAligned = match + mismatch;
 		final int totalGaps = gapA + gapB;
 		final int gapExtends = totalGaps - gapOpens;
+
+
+		if (totalAligned < minAlignedColumns)
+			{
+			return Double.NaN;
+			}
+
 
 		// in the "affine" model here, we just add the gaps to the alignment as weighted mismatches, extending both the numerator and the denominator
 		final double gapsAsMismatches = gapOpens * gapOpenPenalty + gapExtends * gapExtendsPenalty;
