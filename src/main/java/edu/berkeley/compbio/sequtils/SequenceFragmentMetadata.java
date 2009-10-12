@@ -51,7 +51,7 @@ import java.io.Serializable;
  * @version $Id$
  */
 public class SequenceFragmentMetadata<C extends SequenceFragmentMetadata> extends LabellableImpl<String>
-		implements Comparable<C>, Serializable //, WeightedLabelCarrier
+		implements Comparable<C>, Serializable //, Clusterable<SequenceFragmentMetadata> //, WeightedLabelCarrier
 	{
 	// ------------------------------ FIELDS ------------------------------
 
