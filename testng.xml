@@ -34,11 +34,16 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 <suite name="sequtils" verbose="1" parallel="false" thread-count="1">
-	<test name="sequtils">
-		<packages>
-			<package name="edu.berkeley.compbio.sequtils"/>
-			<package name="edu.berkeley.compbio.sequtils.*"/>
-		</packages>
-	</test>
+  <test name="sequtils">
+    <packages>
+      <package name="edu.berkeley.compbio.sequtils"/>
+      <package name="edu.berkeley.compbio.sequtils.*"/>
+    </packages>
+    <classes>
+      <class name="edu.berkeley.compbio.sequtils.strings.MarkovTreeNodeTest"/>
+      <class name="edu.berkeley.compbio.sequtils.strings.RonPSTNodeTest"/>
+      <class name="edu.berkeley.compbio.sequtils.strings.RonPSTTest"/>
+    </classes>
+  </test>
 </suite>
 
