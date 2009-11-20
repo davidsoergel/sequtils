@@ -37,7 +37,7 @@
   <artifactId>sequtils</artifactId>
 
   <name>sequtils</name>
-  <version>0.9</version>
+  <version>0.91-SNAPSHOT</version>
   <url>http://dev.davidsoergel.com/sequtils</url>
   <description>Convenience classes for dealing with sequence data.</description>
 
@@ -57,8 +57,8 @@
   </issueManagement>
 
   <scm>
-    <connection>scm:svn:http://svn.davidsoergel.com/repos/sequtils/tags/sequtils-0.9</connection>
-    <developerConnection>scm:svn:svn+ssh://svn.davidsoergel.com/home/svn/repos-compbio/sequtils/tags/sequtils-0.9
+    <connection>scm:svn:http://svn.davidsoergel.com/repos/sequtils</connection>
+    <developerConnection>scm:svn:svn+ssh://svn.davidsoergel.com/home/svn/repos-compbio/sequtils
     </developerConnection>
   </scm>
 
