@@ -31,13 +31,14 @@
   ~ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>edu.berkeley.compbio</groupId>
   <artifactId>sequtils</artifactId>
 
   <name>sequtils</name>
-  <version>0.91-SNAPSHOT</version>
+  <version>0.9-SNAPSHOT</version>
   <url>http://dev.davidsoergel.com/sequtils</url>
   <description>Convenience classes for dealing with sequence data.</description>
 
@@ -53,7 +54,7 @@
 
   <issueManagement>
     <system>Trac</system>
-    <url>http://dev.davidsoergel.com/sequtils/</url>
+    <url>http://dev.davidsoergel.com/trac/sequtils/</url>
   </issueManagement>
 
   <scm>
@@ -93,7 +94,6 @@
       <groupId>com.davidsoergel</groupId>
       <artifactId>dsutils</artifactId>
       <version>1.01</version>
-      <scope>compile</scope>
     </dependency>
 
     <dependency>
@@ -110,6 +110,7 @@
       <version>0.9</version>
       <scope>compile</scope>
     </dependency>
+
     <dependency>
       <groupId>edu.berkeley.compbio</groupId>
       <artifactId>ml</artifactId>
