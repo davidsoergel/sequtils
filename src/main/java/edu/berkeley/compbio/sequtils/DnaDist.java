@@ -125,6 +125,6 @@ public class DnaDist implements DissimilarityMeasure<byte[]>
 	public String toString()
 		{
 		//return "DnaDist{" + "gapOpenPenalty=" + gapOpenPenalty + ", gapExtendsPenalty=" + gapExtendsPenalty + '}';
-		return "DnaDist{" + gapOpenPenalty + ", " + gapExtendsPenalty + '}';
+		return "DnaDist{" + gapOpenPenalty + "," + gapExtendsPenalty + '}';
 		}
 	}
