@@ -3,6 +3,7 @@ package edu.berkeley.compbio.sequtils;
 import org.apache.log4j.Logger;
 
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 /**
  * @version 1.0
@@ -560,14 +561,12 @@ public class SequenceArrayUtils
 
 	/**
 	 * copy a slice ending at the given position (exclusive!) of whatever width is needed to obtain the requested number of
-	 * non-gap characters
+	 * non-gap characters. Error-prone?
 	 *
-	 * @param x
-	 * @param pos
-	 * @param nonGapsDesired
+	 * @param x //@param pos //@param nonGapsDesired
 	 * @return
 	 */
-	public static byte[] copySliceUpToNNonGapsReverse(final byte[] x, final int pos, final int nonGapsDesired)
+/*	public static byte[] copySliceUpToNNonGapsReverse(final byte[] x, final int pos, final int nonGapsDesired)
 			throws NotEnoughSequenceException
 		{
 		int trav = pos - 1;
@@ -599,8 +598,7 @@ public class SequenceArrayUtils
 			}
 
 		return copySlice(x, trav, pos - trav);
-		}
-
+		}*/
 	public static byte[] applyMask(boolean[] mask, byte[] x, byte maskByte)
 		{
 		final int len = x.length;
@@ -670,5 +668,244 @@ public class SequenceArrayUtils
 		System.arraycopy(aFrag, 0, result, startPos, aFrag.length);
 		Arrays.fill(result, 0, startPos, GAP_BYTE);
 		return result;
+		}
+
+
+	/*
+		 * The Computer Language Benchmarks Game
+		 * http://shootout.alioth.debian.org/
+		 * contributed by Anthony Donnefort
+		 * slightly modified to read 82 bytes at a time by Razii
+		 */
+
+
+	static final byte[] cmp = new byte[128];
+
+	static
+		{
+		for (int i = 0; i < cmp.length; i++)
+			{
+			cmp[i] = (byte) i;
+			}
+		cmp['t'] = cmp['T'] = 'A';
+		cmp['a'] = cmp['A'] = 'T';
+
+		cmp['g'] = cmp['G'] = 'C';
+		cmp['c'] = cmp['C'] = 'G';
+
+		cmp['m'] = cmp['M'] = 'K';
+		cmp['k'] = cmp['K'] = 'M';
+
+		cmp['r'] = cmp['R'] = 'Y';
+		cmp['y'] = cmp['Y'] = 'R';
+
+		cmp['w'] = cmp['W'] = 'S';
+		cmp['s'] = cmp['S'] = 'W';
+
+		cmp['v'] = cmp['V'] = 'B';
+		cmp['b'] = cmp['B'] = 'V';
+
+		cmp['h'] = cmp['H'] = 'D';
+		cmp['d'] = cmp['D'] = 'H';
+
+		cmp['u'] = cmp['U'] = 'A';
+
+		//cmp['n'] = cmp['N'] = 'N';
+		//cmp['x'] = cmp['X'] = 'X';
+
+		//cmp['-'] = '-';
+		//cmp['.'] = '.';
+		}
+
+
+/*	from http ://greengenes.lbl.gov/cgi-bin/nph-probe_locator.cgi
+
+			#M=[ACM]
+			#R=[AGR]
+			#W=[ATW]
+			#S=[CGS]
+			#Y=[CTY]
+			#K=[GTK]
+			#V=[ACGV]
+			#H=[ACTH]
+			#D=[AGTD]
+			#B=[CGTB]
+			#N=[ACGTMRWSYKVHDBN]
+			#X=[ACGTMRWSYKVHDBN]
+			#Z=[ACGTMRWSYKVHDBN]?  (N one or zero times)
+			#J=[ACGTMRWSYKVHDBN]*  (N zero or more times)
+*/
+
+	public static byte[] reverseComplement(final byte[] seq)
+		{
+		int i = seq.length;
+
+		byte[] rc = new byte[i];
+
+		i--;
+		for (byte b : seq)
+			{
+			rc[i] = cmp[b];
+			i--;
+			}
+
+		return rc;
+		}
+
+	public static Pattern iupacPattern(String s)
+		{
+		String regex = s;
+		regex = regex.replaceAll("(.)", "[\\.-]*$1");
+
+		regex = regex.replaceAll("M", "[ACM]");
+		regex = regex.replaceAll("R", "[AGR]");
+		regex = regex.replaceAll("W", "[ATW]");
+		regex = regex.replaceAll("S", "[CGS]");
+		regex = regex.replaceAll("Y", "[CTY]");
+		regex = regex.replaceAll("K", "[GTK]");
+		regex = regex.replaceAll("V", "[ACGV]");
+		regex = regex.replaceAll("H", "[ACTH]");
+		regex = regex.replaceAll("D", "[AGTD]");
+		regex = regex.replaceAll("B", "[CGTB]");
+		regex = regex.replaceAll("N", "[ACGTMRWSYKVHDBN]");
+		regex = regex.replaceAll("X", "[ACGTMRWSYKVHDBN]");
+		regex = regex.replaceAll("Z", "[ACGTMRWSYKVHDBN]?");
+		regex = regex.replaceAll("J", "[ACGTMRWSYKVHDBN]*");
+
+		return Pattern.compile(regex);
+		}
+
+	public static boolean startsWithIUPAC(final byte[] aFrag, final byte[] iupacPattern)
+		{
+		// it makes no sense for the pattern to contain any gaps
+
+		int pos = 0;
+
+		// note we insist that the first character is not a gap
+
+		for (int i = 0; i < iupacPattern.length; i++)
+			{
+			if (pos > aFrag.length)
+				{
+				// the pattern is longer than the provided sequence
+				return false;
+				}
+
+			byte c = aFrag[pos];
+			switch (iupacPattern[i])
+				{
+				case 'A':
+					if (c != 'A')
+						{
+						return false;
+						}
+					break;
+				case 'C':
+					if (c != 'C')
+						{
+						return false;
+						}
+					break;
+				case 'G':
+					if (c != 'G')
+						{
+						return false;
+						}
+					break;
+				case 'T':
+					if (c != 'T')
+						{
+						return false;
+						}
+					break;
+				case 'M':
+					if (c != 'A' && c != 'C' && c != 'M')
+						{
+						return false;
+						}
+					break;
+				case 'R':
+					if (c != 'A' && c != 'G' && c != 'R')
+						{
+						return false;
+						}
+					break;
+				case 'W':
+					if (c != 'A' && c != 'T' && c != 'W')
+						{
+						return false;
+						}
+					break;
+				case 'S':
+					if (c != 'C' && c != 'G' && c != 'S')
+						{
+						return false;
+						}
+					break;
+				case 'Y':
+					if (c != 'C' && c != 'T' && c != 'Y')
+						{
+						return false;
+						}
+					break;
+				case 'K':
+					if (c != 'G' && c != 'T' && c != 'K')
+						{
+						return false;
+						}
+					break;
+				case 'V':
+					if (c != 'A' && c != 'C' && c != 'G' && c != 'V')
+						{
+						return false;
+						}
+					break;
+				case 'H':
+					if (c != 'A' && c != 'C' && c != 'T' && c != 'H')
+						{
+						return false;
+						}
+					break;
+				case 'D':
+					if (c != 'A' && c != 'G' && c != 'T' && c != 'D')
+						{
+						return false;
+						}
+					break;
+				case 'B':
+					if (c != 'C' && c != 'G' && c != 'T' && c != 'B')
+						{
+						return false;
+						}
+					break;
+				case 'N':
+				case 'X':
+					if (c != 'A' && c != 'C' && c != 'G' && c != 'T' && c != 'M' && c != 'R' && c != 'W' && c != 'S'
+					    && c != 'Y' && c != 'K' && c != 'V' && c != 'H' && c != 'D' && c != 'B' && c != 'N')
+						{
+						return false;
+						}
+					break;
+				default:
+					logger.error("Bad char '" + c + "' in pattern: " + new String(iupacPattern));
+					throw new SequenceArrayException("Bad char '" + c + "' in pattern: " + new String(iupacPattern));
+				}
+
+			pos++;
+
+			try
+				{
+				//PERF?
+				while (isGap(aFrag[pos]))
+					{
+					pos++;
+					}
+				}
+			catch (ArrayIndexOutOfBoundsException e)
+				{
+				// no prob, end of sequence.
+				}
+			}
+		return true;
 		}
 	}
