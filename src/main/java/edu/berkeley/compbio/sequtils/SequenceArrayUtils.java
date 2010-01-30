@@ -777,6 +777,14 @@ public class SequenceArrayUtils
 
 	public static boolean startsWithIUPAC(final byte[] aFrag, final byte[] iupacPattern)
 		{
+		String fragString = new String(aFrag);
+		if (fragString.length() > 80)
+			{
+			fragString = fragString.substring(0, 80) + "...";
+			}
+
+		logger.info("Checking IUPAC pattern " + new String(iupacPattern) + " in " + fragString);
+
 		// it makes no sense for the pattern to contain any gaps
 
 		int pos = 0;
