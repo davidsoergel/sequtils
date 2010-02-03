@@ -783,7 +783,7 @@ public class SequenceArrayUtils
 			fragString = fragString.substring(0, 80) + "...";
 			}
 
-		logger.info("Checking IUPAC pattern " + new String(iupacPattern) + " in " + fragString);
+		// logger.info("Checking IUPAC pattern " + new String(iupacPattern) + " in " + fragString);
 
 		// it makes no sense for the pattern to contain any gaps
 
