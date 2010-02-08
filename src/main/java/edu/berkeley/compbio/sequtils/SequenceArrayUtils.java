@@ -777,7 +777,7 @@ public class SequenceArrayUtils
 
 	public static boolean startsWithIUPAC(final byte[] aFrag, final byte[] iupacPattern)
 		{
-		if (aFrag == null || aFrag.length == 0)
+		if (iupacPattern == null || iupacPattern.length == 0)
 			{
 			return true;
 			}
