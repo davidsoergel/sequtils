@@ -777,6 +777,10 @@ public class SequenceArrayUtils
 
 	public static boolean startsWithIUPAC(final byte[] aFrag, final byte[] iupacPattern)
 		{
+		if (aFrag == null || aFrag.length == 0)
+			{
+			return true;
+			}
 		String fragString = new String(aFrag);
 		if (fragString.length() > 80)
 			{
