@@ -396,4 +396,26 @@ public class DynamicProgrammingPairwiseAligner
 			}
 		return bestvIndex;
 		}
+
+
+	public OrderedPair<byte[], byte[]> realign(OrderedPair<byte[], byte[]> pair)
+		//   final DynamicProgrammingPairwiseAligner aligner)
+		{
+		// make gap-free copies
+		byte[] aGapFree = SequenceArrayUtils.copyNoGaps(pair.getKey1());
+		byte[] bGapFree = SequenceArrayUtils.copyNoGaps(pair.getKey2());
+
+		if (aGapFree.length == 0 || bGapFree.length == 0)
+			{
+			return null; //Double.NaN;
+			}
+
+		// align them
+
+		OrderedPair<byte[], byte[]> aligned = align(aGapFree, bGapFree);
+
+		byte[] realignedA = aligned.getKey1();
+		byte[] realignedB = aligned.getKey2();
+		return new OrderedPair<byte[], byte[]>(realignedA, realignedB);
+		}
 	}
