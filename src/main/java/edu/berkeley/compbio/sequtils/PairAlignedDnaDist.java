@@ -27,4 +27,14 @@ public class PairAlignedDnaDist implements DissimilarityMeasure<byte[]> //, Diss
 			}
 		return dnaDist.distanceFromTo(realigned.getKey1(), realigned.getKey2());
 		}
+
+
+	@Override
+	public String toString()
+		{
+		String shortname = getClass().getName();
+		shortname = shortname.substring(shortname.lastIndexOf(".") + 1);
+		return shortname //+ " " + aligner 
+		       + " " + dnaDist;
+		}
 	}

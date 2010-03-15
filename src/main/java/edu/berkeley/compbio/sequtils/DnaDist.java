@@ -121,10 +121,19 @@ public class DnaDist implements DissimilarityMeasure<byte[]>
 		return jukesCantorDistance;
 		}
 
-	@Override
+/*	@Override
 	public String toString()
 		{
 		//return "DnaDist{" + "gapOpenPenalty=" + gapOpenPenalty + ", gapExtendsPenalty=" + gapExtendsPenalty + '}';
 		return "DnaDist{" + gapOpenPenalty + "," + gapExtendsPenalty + '}';
+		}
+*/
+
+	@Override
+	public String toString()
+		{
+		String shortname = getClass().getName();
+		shortname = shortname.substring(shortname.lastIndexOf(".") + 1);
+		return shortname + " " + gapOpenPenalty + " " + gapExtendsPenalty;
 		}
 	}
