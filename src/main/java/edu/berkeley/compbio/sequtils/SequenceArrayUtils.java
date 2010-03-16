@@ -777,21 +777,28 @@ public class SequenceArrayUtils
 
 	public static boolean startsWithIUPAC(final byte[] aFrag, final byte[] iupacPattern)
 		{
+		return startsWithIUPAC(aFrag, 0, iupacPattern);
+		}
+
+	public static boolean startsWithIUPAC(final byte[] aFrag, final int start, final byte[] iupacPattern)
+		{
 		if (iupacPattern == null || iupacPattern.length == 0)
 			{
 			return true;
 			}
-		String fragString = new String(aFrag);
-		if (fragString.length() > 80)
+
+		/*String fragString = new String(aFrag);
+		if (fragString.length() > start + 80)
 			{
-			fragString = fragString.substring(0, 80) + "...";
+			fragString = fragString.substring(start, 80) + "...";
 			}
 
-		// logger.info("Checking IUPAC pattern " + new String(iupacPattern) + " in " + fragString);
+		logger.info("Checking IUPAC pattern " + new String(iupacPattern) + " in " + fragString);
+		*/
 
 		// it makes no sense for the pattern to contain any gaps
 
-		int pos = 0;
+		int pos = start;
 
 		// note we insist that the first character is not a gap
 
