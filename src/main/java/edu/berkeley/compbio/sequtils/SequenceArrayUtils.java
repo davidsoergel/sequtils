@@ -804,7 +804,7 @@ public class SequenceArrayUtils
 
 		for (int i = 0; i < iupacPattern.length; i++)
 			{
-			if (pos > aFrag.length)
+			if (pos >= aFrag.length)
 				{
 				// the pattern is longer than the provided sequence
 				return false;
