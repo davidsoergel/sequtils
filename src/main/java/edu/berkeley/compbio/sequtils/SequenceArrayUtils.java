@@ -461,6 +461,21 @@ public class SequenceArrayUtils
 		return copySlice(result, 0, i);
 		}
 
+	public static byte[] copyWithout(byte[] x, byte b)
+		{
+		byte[] result = new byte[x.length];
+		int i = 0;
+		for (int j = 0; j < x.length; j++)
+			{
+			if (!(x[j] == b))
+				{
+				result[i] = x[j];
+				i++;
+				}
+			}
+		return copySlice(result, 0, i);
+		}
+
 	public static void replaceGaps(byte[] seq1)//, String gapChars)
 		{
 		for (int i = 0; i < seq1.length; i++)
