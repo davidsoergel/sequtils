@@ -161,6 +161,7 @@ public class StubSFI extends ScanningSFI
 			//			result.getMetadata().setSequenceName("Seq " + pos);
 			charactersRead += result.getLength();
 			pos++;
+			result.doneLabelling();
 			return result;
 			}
 		catch (NotEnoughSequenceException e)
