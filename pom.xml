@@ -107,7 +107,7 @@
     <dependency>
       <groupId>com.davidsoergel</groupId>
       <artifactId>stats</artifactId>
-      <version>0.92</version>
+      <version>0.93-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
 
