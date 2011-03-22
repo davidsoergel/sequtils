@@ -108,6 +108,7 @@ public class SequenceFragment extends SequenceFragmentMetadata<SequenceFragment>
 		 super(parent, sequenceName, taxid, startPosition);
 		 }
  */
+
 	/**
 	 * Constructs a new SequenceFragment by specifying its coordinates with respect to a containing parent sequence.
 	 *
@@ -259,6 +260,16 @@ public class SequenceFragment extends SequenceFragmentMetadata<SequenceFragment>
 		return length;
 		}
 
+	public long getUnknownCount()
+		{
+		return getBaseSpectrum().getUnknownCount();
+		/*if (length == UNKNOWN_LENGTH)
+			{
+			getLength();
+			}
+		return unknownCount;*/
+		}
+
 	// ** should be weak
 	byte[] translatedSequence = null;
 
@@ -311,48 +322,48 @@ public class SequenceFragment extends SequenceFragmentMetadata<SequenceFragment>
 	private byte[] rawSequence = null;
 
 	protected synchronized void rescanRawSequence()// throws NotEnoughSequenceException
+	{
+	List<Byte> rawSequenceBuilder = new ArrayList<Byte>(); //byte[desiredlength];
+	try
 		{
-		List<Byte> rawSequenceBuilder = new ArrayList<Byte>(); //byte[desiredlength];
-		try
+		if (theReader != null)
 			{
-			if (theReader != null)
+			synchronized (theReader)
 				{
-				synchronized (theReader)
-					{
 
-					theReader.seek(parentMetadata, startPosition);
-					for (int i = 0; i < desiredlength; i++)
-						{
-						rawSequenceBuilder.add(new Byte((byte) theReader.read()));
-						}
+				theReader.seek(parentMetadata, startPosition);
+				for (int i = 0; i < desiredlength; i++)
+					{
+					rawSequenceBuilder.add(new Byte((byte) theReader.read()));
 					}
 				}
 			}
-		catch (NotEnoughSequenceException e)
-			{
-			if (desiredLengthUnknown())
-				{
-				// OK, no problem, we're done
-				}
-			else
-				{
-				logger.error("Error", e);
-				throw new SequenceSpectrumRuntimeException(e);
-				}
-			}
-
-		catch (IOException e)
-			{
-			logger.error("Error", e);
-			throw new SequenceSpectrumRuntimeException(e);
-			}
-		catch (FilterException e)
-			{
-			logger.error("Error", e);
-			throw new SequenceSpectrumRuntimeException(e);
-			}
-		rawSequence = DSArrayUtils.toPrimitive(rawSequenceBuilder.toArray(DSArrayUtils.EMPTY_BYTE_OBJECT_ARRAY));
 		}
+	catch (NotEnoughSequenceException e)
+		{
+		if (desiredLengthUnknown())
+			{
+			// OK, no problem, we're done
+			}
+		else
+			{
+			logger.error("Error", e);
+			throw new SequenceSpectrumRuntimeException(e);
+			}
+		}
+
+	catch (IOException e)
+		{
+		logger.error("Error", e);
+		throw new SequenceSpectrumRuntimeException(e);
+		}
+	catch (FilterException e)
+		{
+		logger.error("Error", e);
+		throw new SequenceSpectrumRuntimeException(e);
+		}
+	rawSequence = DSArrayUtils.toPrimitive(rawSequenceBuilder.toArray(DSArrayUtils.EMPTY_BYTE_OBJECT_ARRAY));
+	}
 
 	protected synchronized void rescanSpectrum() throws NotEnoughSequenceException
 		{
@@ -1050,13 +1061,13 @@ public class SequenceFragment extends SequenceFragmentMetadata<SequenceFragment>
 
 
 	public byte[] getTranslatedSequence() //final byte[] alphabet)
+	{
+	if (translatedSequence == null)
 		{
-		if (translatedSequence == null)
-			{
-			rescanTranslatedSequence();
-			}
-		return translatedSequence;
+		rescanTranslatedSequence();
 		}
+	return translatedSequence;
+	}
 
 	public byte[] getRawSequence()
 		{

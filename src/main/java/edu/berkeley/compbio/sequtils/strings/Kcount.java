@@ -54,7 +54,7 @@ public abstract class Kcount<T extends Kcount> extends HierarchicalSpectrum<T>
 	//protected int numberOfSamples = UNKNOWN_NUMBER_OF_SAMPLES;
 
 	protected long originalSequenceLength = 0; // = UNKNOWN_LENGTH;
-
+	protected long unknownCount = 0;
 
 // --------------------- GETTER / SETTER METHODS ---------------------
 
@@ -92,6 +92,10 @@ public abstract class Kcount<T extends Kcount> extends HierarchicalSpectrum<T>
 		return originalSequenceLength;
 		}
 
+	public long getUnknownCount()
+		{
+		return unknownCount;
+		}
 // ------------------------ INTERFACE METHODS ------------------------
 
 
@@ -148,6 +152,12 @@ public abstract class Kcount<T extends Kcount> extends HierarchicalSpectrum<T>
 		{
 		//metadata.length++;//incrementLength();
 		originalSequenceLength++;
+		unknownCount++;
+		}
+
+	public double unknownProportion()
+		{
+		return (double) originalSequenceLength / (double) unknownCount;
 		}
 
 	/**
@@ -160,6 +170,7 @@ public abstract class Kcount<T extends Kcount> extends HierarchicalSpectrum<T>
 		 return numberOfSamples;
 		 }
  */
+
 	/**
 	 * Returns the the sum of the counts.  May be completely different from the number of samples due to smoothing or
 	 * normalization.  Even for raw counts, this may be greater than the number of samples due to pseudocounts.  May differ

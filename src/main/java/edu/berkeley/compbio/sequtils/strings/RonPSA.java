@@ -206,6 +206,7 @@ public class RonPSA extends RonPSANode
 		buildPSARecursivelyFromPSTNode(pst, pst);
 		updateLogProbsRecursive();
 		setOriginalSequenceLength(pst.getOriginalSequenceLength());
+		setUnknownCount(pst.getUnknownCount());
 
 		// at this point we have a pure tree with a full set of probabilities at every node
 

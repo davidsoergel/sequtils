@@ -115,6 +115,13 @@ public class RonPST extends RonPSTNode
 		}
 
 	private long originalSequenceLength;
+	private long unknownCount;
+
+
+	public long getUnknownCount()
+		{
+		return unknownCount;
+		}
 
 	// diagnostics
 	private int total = 0;
@@ -126,9 +133,9 @@ public class RonPST extends RonPSTNode
 // --------------------------- CONSTRUCTORS ---------------------------
 
 	public RonPST()//String injectorId)
-		{
-		//ResultsCollectingProgramRun.getProps().injectProperties(injectorId, this);
-		}
+	{
+	//ResultsCollectingProgramRun.getProps().injectProperties(injectorId, this);
+	}
 
 	/*
 	     * @param alpha                the "headroom" over the smoothing factor gammaMin that determines whether a branch is to
@@ -142,6 +149,7 @@ public class RonPST extends RonPSTNode
 		 *                             smoothing factor, it's considered to be noise and should be pruned.
 
 	 */
+
 	/**
 	 * Constructs a new Probabilistic Suffix Tree according to the Learn-PST algorithm (Ron et al 1996 p. 13), based on an
 	 * existing sequence spectrum (typically, the set of all word counts; or naively just the sequence itself, if we don't
@@ -166,7 +174,7 @@ public class RonPST extends RonPSTNode
 
 	public RonPST(final double branchAbsoluteMin, final double branchConditionalMin, final double pRatioMinMax,
 	              final int l_max, final SequenceSpectrum prob)
-		//throws SequenceSpectrumException//DistributionException,
+	//throws SequenceSpectrumException//DistributionException,
 		{
 		this();
 		learn(branchAbsoluteMin, branchConditionalMin, pRatioMinMax, l_max, prob);
@@ -193,7 +201,7 @@ public class RonPST extends RonPSTNode
 		  this.gammaMin = gammaMin;
 		  this.l_max = l_max;
   */
-
+		unknownCount = fromSpectrum.getUnknownCount();
 
 		// First Phase
 
@@ -565,6 +573,7 @@ public class RonPST extends RonPSTNode
 		{
 		}
 */
+
 	/**
 	 * {@inheritDoc}
 	 */

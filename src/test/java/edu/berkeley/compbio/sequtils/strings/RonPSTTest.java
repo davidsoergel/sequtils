@@ -508,6 +508,11 @@ public class RonPSTTest extends ContractTestAware<RonPSTTest> implements TestIns
 			//throw new NotImplementedException();
 			}
 
+		public long getUnknownCount()
+			{
+			return 0;
+			}
+
 		/**
 		 * {@inheritDoc}
 		 */
@@ -517,6 +522,7 @@ public class RonPSTTest extends ContractTestAware<RonPSTTest> implements TestIns
 			  //return 50;
 			  }
   */
+
 		/**
 		 * {@inheritDoc}
 		 */

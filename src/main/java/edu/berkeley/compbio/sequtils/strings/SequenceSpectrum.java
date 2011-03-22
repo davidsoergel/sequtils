@@ -142,6 +142,13 @@ public interface SequenceSpectrum<T extends SequenceSpectrum>
 	long getOriginalSequenceLength();
 
 	/**
+	 * Returns the number of characters from the original sequence that were not counted because they were unknown
+	 *
+	 * @return
+	 */
+	long getUnknownCount();
+
+	/**
 	 * Returns the number of real samples on which this spectrum is based, not including pseudocounts or any other smoothing whatnot.
 	 *
 	 * @return The number of samples

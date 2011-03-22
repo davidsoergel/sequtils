@@ -152,6 +152,7 @@ public class MarkovTreeNode extends AbstractGenericFactoryAware
 	private double avgdepth = 0;
 
 	private long originalSequenceLength;
+	private long unknownCount;
 
 
 // --------------------------- CONSTRUCTORS ---------------------------
@@ -213,6 +214,16 @@ public class MarkovTreeNode extends AbstractGenericFactoryAware
 	public void setOriginalSequenceLength(final long originalSequenceLength)
 		{
 		this.originalSequenceLength = originalSequenceLength;
+		}
+
+	public long getUnknownCount()
+		{
+		return unknownCount;
+		}
+
+	public void setUnknownCount(final long unknownCount)
+		{
+		this.unknownCount = unknownCount;
 		}
 
 	/**
@@ -682,9 +693,9 @@ public class MarkovTreeNode extends AbstractGenericFactoryAware
 			return addChild(prefix[0]);
 			}
 		else if (prefix.length >= 1)
-				{
-				return addChild(prefix[0]).add(DSArrayUtils.suffix(prefix, 1));
-				}
+			{
+			return addChild(prefix[0]).add(DSArrayUtils.suffix(prefix, 1));
+			}
 		throw new Error("Impossible");
 		}
 
@@ -777,7 +788,7 @@ public class MarkovTreeNode extends AbstractGenericFactoryAware
 	 * there is a child for each symbol in the alphabet.
 	 */
 	public void copyProbsFromSpectrumRecursively(final SequenceSpectrum spectrum)
-		//throws SequenceSpectrumException//DistributionException,
+	//throws SequenceSpectrumException//DistributionException,
 		{
 		for (final byte sigma : getAlphabet())
 			{
