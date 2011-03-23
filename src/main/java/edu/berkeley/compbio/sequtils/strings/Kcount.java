@@ -157,7 +157,7 @@ public abstract class Kcount<T extends Kcount> extends HierarchicalSpectrum<T>
 
 	public double unknownProportion()
 		{
-		return (double) originalSequenceLength / (double) unknownCount;
+		return (double) unknownCount / (double) originalSequenceLength;
 		}
 
 	/**
