@@ -101,6 +101,10 @@ public class FastaFileSet implements HasReleaseableResources
 		CachedResourceReleaser.register(this);
 		}
 
+	public FastaFileSet(String input) throws IOException
+		{
+		this(new File(input));
+		}
 
 	/**
 	 * Initializes a file set from a file or directory
