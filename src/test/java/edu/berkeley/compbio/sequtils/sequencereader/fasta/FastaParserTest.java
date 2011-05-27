@@ -77,7 +77,8 @@ public class FastaParserTest
 		expectPositionValid(checkCurrentPositionIsValidSequence, 0, false);
 		expectPositionValid(checkCurrentPositionIsValidSequence, 7, false);
 		expectPositionValid(checkCurrentPositionIsValidSequence, 35, false);
-		expectPositionValid(checkCurrentPositionIsValidSequence, 36, true);
+		expectPositionValid(checkCurrentPositionIsValidSequence, 36, false);
+		expectPositionValid(checkCurrentPositionIsValidSequence, 37, true);
 		expectPositionValid(checkCurrentPositionIsValidSequence, 37, true);
 		expectPositionValid(checkCurrentPositionIsValidSequence, 50, true);
 		expectPositionValid(checkCurrentPositionIsValidSequence, 500, true);

@@ -287,6 +287,7 @@ public class FastaParser extends TranslatingSequenceReader implements SectionLis
 	int[] indexesShuffled;
 	int shuffledIndex;
 
+	@NotNull
 	public SequenceFragmentMetadata nextShuffled() throws IOException, NotEnoughSequenceException
 		{
 		if (offsetToSectionIndex == null)
@@ -384,9 +385,9 @@ public class FastaParser extends TranslatingSequenceReader implements SectionLis
 
 	public void seek(SequenceFragmentMetadata location) //throws IOException
 
-		{
-		seek(location, 0);
-		}
+	{
+	seek(location, 0);
+	}
 
 	// -------------------------- OTHER METHODS --------------------------
 
@@ -399,10 +400,15 @@ public class FastaParser extends TranslatingSequenceReader implements SectionLis
 
 		long fileTrav = filePosition - validCharsInBuffer + bufPosition;
 		//System.out.println(fileTrav);
-		int upstreamCharsAvailable = fileset.readAt(upstreamBuffer, Math.max(fileTrav - upstreamBufferSize, 0),
-		                                            (int) Math.min(fileTrav + 1, upstreamBufferSize));
 
-		if (upstreamCharsAvailable != Math.min(upstreamBufferSize, fileTrav + 1))
+		//long desiredChars = Math.min(upstreamBufferSize, fileTrav + 1);
+		long upstreamStartPosition = Math.max(fileTrav - upstreamBufferSize, 0);
+
+		long desiredChars = fileTrav - upstreamStartPosition;
+
+		int upstreamCharsAvailable = fileset.readAt(upstreamBuffer, upstreamStartPosition, (int) desiredChars);
+
+		if (upstreamCharsAvailable != desiredChars)
 			{
 			// this should never happen
 			throw new SequenceError("Didn't get as much upstream sequence as we wanted");
@@ -603,39 +609,39 @@ public class FastaParser extends TranslatingSequenceReader implements SectionLis
 		}
 
 	protected void seek(long newRawPosition) //throws IOException
+	{
+	//if(logger.isDebugEnabled()) logger.debug("Seek to: " + newRawPosition);
+	long oldRawPosition = filePosition - validCharsInBuffer + bufPosition;
+	//System.out.println("Pos: "+filePosition+"");
+	//System.out.println("I: "+bufPosition+"");
+	//System.out.println("New newRawPosition: "+newRawPosition+"");
+	//System.out.println("Current newRawPosition: "+oldRawPosition+"");
+	//if (newRawPosition != oldRawPosition)
+	//	{
+	//int distance = newRawPosition - oldRawPosition;
+	int newBufPosition = (int) (bufPosition + (newRawPosition - oldRawPosition));
+	if (newBufPosition >= 0 && newBufPosition < validCharsInBuffer)
 		{
-		//if(logger.isDebugEnabled()) logger.debug("Seek to: " + newRawPosition);
-		long oldRawPosition = filePosition - validCharsInBuffer + bufPosition;
-		//System.out.println("Pos: "+filePosition+"");
-		//System.out.println("I: "+bufPosition+"");
-		//System.out.println("New newRawPosition: "+newRawPosition+"");
-		//System.out.println("Current newRawPosition: "+oldRawPosition+"");
-		//if (newRawPosition != oldRawPosition)
-		//	{
-		//int distance = newRawPosition - oldRawPosition;
-		int newBufPosition = (int) (bufPosition + (newRawPosition - oldRawPosition));
-		if (newBufPosition >= 0 && newBufPosition < validCharsInBuffer)
-			{
-			bufPosition = newBufPosition;
-			//filePosition = newRawPosition;
-			//System.out.println("Rewinding.");
-			}
-		else
-			{
-			filePosition = newRawPosition;
-			//validCharsInBuffer = fileset.read(buf, filePosition, buffersize);
-			//filePosition += validCharsInBuffer;
-			validCharsInBuffer = 0;
-			bufPosition = 0;
-			//System.out.println("Resetting.");
-			}
-		//	}
-		//System.out.println("Pos: "+filePosition+"");
-		//System.out.println("I: "+bufPosition+"");
-		//System.out.println("Done.");
-		//System.out.println("");
-		//System.out.print("*"+filePosition+"*");
+		bufPosition = newBufPosition;
+		//filePosition = newRawPosition;
+		//System.out.println("Rewinding.");
 		}
+	else
+		{
+		filePosition = newRawPosition;
+		//validCharsInBuffer = fileset.read(buf, filePosition, buffersize);
+		//filePosition += validCharsInBuffer;
+		validCharsInBuffer = 0;
+		bufPosition = 0;
+		//System.out.println("Resetting.");
+		}
+	//	}
+	//System.out.println("Pos: "+filePosition+"");
+	//System.out.println("I: "+bufPosition+"");
+	//System.out.println("Done.");
+	//System.out.println("");
+	//System.out.print("*"+filePosition+"*");
+	}
 
 	/**
 	 * Returns a SequenceReader at the given section
@@ -665,19 +671,19 @@ public class FastaParser extends TranslatingSequenceReader implements SectionLis
 		}
 
 	public void seek(SequenceFragmentMetadata location, long offset) //throws IOException
+	{
+	long newRawPosition = offset;
+	if (location == null)
 		{
-		long newRawPosition = offset;
-		if (location == null)
-			{
-			throw new SequenceError("Can't seek to null location");
-			}
-		while (location != null)
-			{
-			newRawPosition += location.getStartPosition();
-			location = location.getParentMetadata();
-			}
-		seek(newRawPosition);
+		throw new SequenceError("Can't seek to null location");
 		}
+	while (location != null)
+		{
+		newRawPosition += location.getStartPosition();
+		location = location.getParentMetadata();
+		}
+	seek(newRawPosition);
+	}
 
 	public Integer getTaxid()
 		{
@@ -741,24 +747,24 @@ public class FastaParser extends TranslatingSequenceReader implements SectionLis
 				bufPosition++;
 				}*/
 			else if (t == ' ')
+				{
+				if (readingId)
 					{
-					if (readingId)
-						{
-						readingId = false;
-						finishedReadingId = true;
-						//done = true;
-						}
-					//bufPosition++;
+					readingId = false;
+					finishedReadingId = true;
+					//done = true;
 					}
-				else
+				//bufPosition++;
+				}
+			else
+				{
+				//bufPosition++;
+				if (readingId)
 					{
-					//bufPosition++;
-					if (readingId)
-						{
-						idStr[idLen] = t;
-						idLen++;
-						}
+					idStr[idLen] = t;
+					idLen++;
 					}
+				}
 			}
 		}
 
