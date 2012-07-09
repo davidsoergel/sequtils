@@ -96,7 +96,10 @@ public class FastaFileSetTest {
 
         URL url = ClassLoader.getSystemResource("Test_Genome");
         theDirectory = new File(url.getPath());
+        logger.info("Loading test genome: " + theDirectory.getAbsolutePath() + " " + theDirectory.exists());
         //theDirectory = new File("src/test/data/Test_Genome/");
         fs = new FastaFileSet(theDirectory);
+
+        logger.info("Got FastaFileSet: " + fs.getTotalSequence());
     }
 }

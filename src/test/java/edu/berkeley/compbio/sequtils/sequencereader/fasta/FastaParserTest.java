@@ -252,8 +252,10 @@ public class FastaParserTest {
         theDirectory = new File(url.getPath());
         //theDirectory = new File("src/test/data/Test_Genome/");
         fs = new FastaFileSet(theDirectory);
+        logger.info("Loading test genome: " + theDirectory.getAbsolutePath() + " " + theDirectory.exists());
 
         fp = new FastaParser(fs, true);
+        logger.info("Got FastaParser: " + fp.getTotalSequence());
     }
 
     /*
