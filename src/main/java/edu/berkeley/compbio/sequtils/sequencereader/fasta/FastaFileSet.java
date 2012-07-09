@@ -41,11 +41,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -180,6 +176,8 @@ public class FastaFileSet implements HasReleaseableResources
 				{
 				throw new IOException("Can't read directory: " + input);
 				}
+
+            Arrays.sort(allFiles);
 
 			//name += "+" + input.getName();
 
