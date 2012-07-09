@@ -35,7 +35,7 @@
 	<groupId>edu.berkeley.compbio</groupId>
 	<artifactId>sequtils</artifactId>
 	<name>sequtils</name>
-	<version>0.91</version>
+	<version>0.92-SNAPSHOT</version>
 	<url>http://dev.davidsoergel.com/sequtils</url>
 	<description>Convenience classes for dealing with sequence data.</description>
 	<parent>
