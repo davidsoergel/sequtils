@@ -49,11 +49,11 @@
 		<system>Trac</system>
 		<url>http://dev.davidsoergel.com/trac/sequtils/</url>
 	</issueManagement>
-	<scm>
-		<connection>scm:svn:http://svn.davidsoergel.com/repos/sequtils</connection>
-		<developerConnection>scm:svn:svn+ssh://svn.davidsoergel.com/home/svn/repos-compbio/sequtils
-        </developerConnection>
-	</scm>
+    <scm>
+        <connection>scm:hg:https://hg.davidsoergel.com/sequtils</connection>
+        <developerConnection>scm:hg:ssh://dev.davidsoergel.com//home/hg/sequtils</developerConnection>
+        <url>http://hg.davidsoergel.com/sequtils</url>
+    </scm>
 	<distributionManagement>
 		<site>
 			<id>website</id>
