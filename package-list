@@ -1,0 +1,5 @@
+edu.berkeley.compbio.sequtils
+edu.berkeley.compbio.sequtils.sequencefragmentiterator
+edu.berkeley.compbio.sequtils.sequencereader
+edu.berkeley.compbio.sequtils.sequencereader.fasta
+edu.berkeley.compbio.sequtils.strings
