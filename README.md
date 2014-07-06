@@ -34,12 +34,12 @@ Download
 
 <dependencies>
 	<dependency>
-		<groupId>com.davidsoergel</groupId>
+		<groupId>edu.berkeley.compbio</groupId>
 		<artifactId>sequtils</artifactId>
 		<version>0.9</version>
 	</dependency>
 </dependencies>
 ```
 
-If you really want just the jar, you can get the [latest release](http://dev.davidsoergel.com/nexus/content/repositories/releases/com/davidsoergel/sequtils/) from the Maven repo; or get the [latest stable build](http://dev.davidsoergel.com/jenkins/job/dsutils/lastStableBuild/com.davidsoergel$sequtils/) from the build server.
+If you really want just the jar, you can get the [latest release](http://dev.davidsoergel.com/nexus/content/repositories/releases/edu/berkeley/compbio/sequtils/) from the Maven repo; or get the [latest stable build](http://dev.davidsoergel.com/jenkins/job/sequtils/lastStableBuild/edu.berkeley.compbio$sequtils/) from the build server.
 
