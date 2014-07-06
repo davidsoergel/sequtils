@@ -36,7 +36,7 @@ Download
 	<dependency>
 		<groupId>edu.berkeley.compbio</groupId>
 		<artifactId>sequtils</artifactId>
-		<version>0.9</version>
+		<version>0.911</version>
 	</dependency>
 </dependencies>
 ```
